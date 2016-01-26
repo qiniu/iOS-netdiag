@@ -1,0 +1,294 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DF2B76EC1C33702D00643678 /* QNNPing.m in Sources */ = {isa = PBXBuildFile; fileRef = DF2B76EB1C33702D00643678 /* QNNPing.m */; };
+		DF2B76F11C3B9DA100643678 /* QNNSimplePing.m in Sources */ = {isa = PBXBuildFile; fileRef = DF2B76F01C3B9DA100643678 /* QNNSimplePing.m */; };
+		DF9D41FA1C57787500486F87 /* QNNTcpPing.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9D41F91C57787500486F87 /* QNNTcpPing.m */; };
+		DF9D41FD1C57789B00486F87 /* QNNUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9D41FC1C57789B00486F87 /* QNNUtil.m */; };
+		DF9D42001C5778B600486F87 /* QNNRtmp.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9D41FF1C5778B600486F87 /* QNNRtmp.m */; };
+		DF9D42031C5778EA00486F87 /* QNNTraceRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9D42021C5778EA00486F87 /* QNNTraceRoute.m */; };
+		DF9D42091C57BEFD00486F87 /* QNNExternalIp.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9D42081C57BEFD00486F87 /* QNNExternalIp.m */; };
+		DFCEC6491C2EC01D0058EE65 /* QNNetDiag.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DFCEC6481C2EC01D0058EE65 /* QNNetDiag.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DFCEC6431C2EC01D0058EE65 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				DFCEC6491C2EC01D0058EE65 /* QNNetDiag.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		DF2B76EA1C33702D00643678 /* QNNPing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNPing.h; sourceTree = "<group>"; };
+		DF2B76EB1C33702D00643678 /* QNNPing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNPing.m; sourceTree = "<group>"; };
+		DF2B76ED1C33706900643678 /* QNNProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNProtocols.h; sourceTree = "<group>"; };
+		DF2B76EF1C3B9DA100643678 /* QNNSimplePing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNSimplePing.h; sourceTree = "<group>"; };
+		DF2B76F01C3B9DA100643678 /* QNNSimplePing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNSimplePing.m; sourceTree = "<group>"; };
+		DF9D41F81C57787500486F87 /* QNNTcpPing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNTcpPing.h; sourceTree = "<group>"; };
+		DF9D41F91C57787500486F87 /* QNNTcpPing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNTcpPing.m; sourceTree = "<group>"; };
+		DF9D41FB1C57789B00486F87 /* QNNUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNUtil.h; sourceTree = "<group>"; };
+		DF9D41FC1C57789B00486F87 /* QNNUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNUtil.m; sourceTree = "<group>"; };
+		DF9D41FE1C5778B600486F87 /* QNNRtmp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNRtmp.h; sourceTree = "<group>"; };
+		DF9D41FF1C5778B600486F87 /* QNNRtmp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNRtmp.m; sourceTree = "<group>"; };
+		DF9D42011C5778EA00486F87 /* QNNTraceRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNTraceRoute.h; sourceTree = "<group>"; };
+		DF9D42021C5778EA00486F87 /* QNNTraceRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNTraceRoute.m; sourceTree = "<group>"; };
+		DF9D42071C57BEFD00486F87 /* QNNExternalIp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNExternalIp.h; sourceTree = "<group>"; };
+		DF9D42081C57BEFD00486F87 /* QNNExternalIp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNExternalIp.m; sourceTree = "<group>"; };
+		DFCEC6451C2EC01D0058EE65 /* libNetDiag.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libNetDiag.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFCEC6481C2EC01D0058EE65 /* QNNetDiag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNNetDiag.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DFCEC6421C2EC01D0058EE65 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DFCEC63C1C2EC01D0058EE65 = {
+			isa = PBXGroup;
+			children = (
+				DFCEC6471C2EC01D0058EE65 /* NetDiag */,
+				DFCEC6461C2EC01D0058EE65 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DFCEC6461C2EC01D0058EE65 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DFCEC6451C2EC01D0058EE65 /* libNetDiag.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DFCEC6471C2EC01D0058EE65 /* NetDiag */ = {
+			isa = PBXGroup;
+			children = (
+				DFCEC6481C2EC01D0058EE65 /* QNNetDiag.h */,
+				DF2B76EA1C33702D00643678 /* QNNPing.h */,
+				DF2B76EB1C33702D00643678 /* QNNPing.m */,
+				DF2B76ED1C33706900643678 /* QNNProtocols.h */,
+				DF2B76EF1C3B9DA100643678 /* QNNSimplePing.h */,
+				DF2B76F01C3B9DA100643678 /* QNNSimplePing.m */,
+				DF9D41F81C57787500486F87 /* QNNTcpPing.h */,
+				DF9D41F91C57787500486F87 /* QNNTcpPing.m */,
+				DF9D41FB1C57789B00486F87 /* QNNUtil.h */,
+				DF9D41FC1C57789B00486F87 /* QNNUtil.m */,
+				DF9D41FE1C5778B600486F87 /* QNNRtmp.h */,
+				DF9D41FF1C5778B600486F87 /* QNNRtmp.m */,
+				DF9D42011C5778EA00486F87 /* QNNTraceRoute.h */,
+				DF9D42021C5778EA00486F87 /* QNNTraceRoute.m */,
+				DF9D42071C57BEFD00486F87 /* QNNExternalIp.h */,
+				DF9D42081C57BEFD00486F87 /* QNNExternalIp.m */,
+			);
+			path = NetDiag;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DFCEC6441C2EC01D0058EE65 /* NetDiag */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DFCEC64E1C2EC01D0058EE65 /* Build configuration list for PBXNativeTarget "NetDiag" */;
+			buildPhases = (
+				DFCEC6411C2EC01D0058EE65 /* Sources */,
+				DFCEC6421C2EC01D0058EE65 /* Frameworks */,
+				DFCEC6431C2EC01D0058EE65 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NetDiag;
+			productName = NetDiag;
+			productReference = DFCEC6451C2EC01D0058EE65 /* libNetDiag.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DFCEC63D1C2EC01D0058EE65 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = "Qiniu Cloud Storage";
+				TargetAttributes = {
+					DFCEC6441C2EC01D0058EE65 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+				};
+			};
+			buildConfigurationList = DFCEC6401C2EC01D0058EE65 /* Build configuration list for PBXProject "NetDiag" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = DFCEC63C1C2EC01D0058EE65;
+			productRefGroup = DFCEC6461C2EC01D0058EE65 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DFCEC6441C2EC01D0058EE65 /* NetDiag */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DFCEC6411C2EC01D0058EE65 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DF2B76EC1C33702D00643678 /* QNNPing.m in Sources */,
+				DF9D41FA1C57787500486F87 /* QNNTcpPing.m in Sources */,
+				DF2B76F11C3B9DA100643678 /* QNNSimplePing.m in Sources */,
+				DF9D42091C57BEFD00486F87 /* QNNExternalIp.m in Sources */,
+				DF9D42001C5778B600486F87 /* QNNRtmp.m in Sources */,
+				DF9D41FD1C57789B00486F87 /* QNNUtil.m in Sources */,
+				DF9D42031C5778EA00486F87 /* QNNTraceRoute.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		DFCEC64C1C2EC01D0058EE65 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		DFCEC64D1C2EC01D0058EE65 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DFCEC64F1C2EC01D0058EE65 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		DFCEC6501C2EC01D0058EE65 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DFCEC6401C2EC01D0058EE65 /* Build configuration list for PBXProject "NetDiag" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DFCEC64C1C2EC01D0058EE65 /* Debug */,
+				DFCEC64D1C2EC01D0058EE65 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DFCEC64E1C2EC01D0058EE65 /* Build configuration list for PBXNativeTarget "NetDiag" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DFCEC64F1C2EC01D0058EE65 /* Debug */,
+				DFCEC6501C2EC01D0058EE65 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DFCEC63D1C2EC01D0058EE65 /* Project object */;
+}
