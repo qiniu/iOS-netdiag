@@ -14,27 +14,22 @@
 
 @implementation QNNPing
 
--(instancetype) init:(NSString*)dest{
-    return [self init:dest count:10];
++(instancetype) start:(NSString*)host
+               output:(id<QNNOutputDelegate>)output
+             complete:(QNNPingCompleteHandler)complete{
+    return [QNNPing start:host output:output complete:complete interval:200 count:10];
 }
 
--(instancetype) init:(NSString*)dest count:(int)count{
-    
-    return self;
-}
-
--(void)setOutput:(id<QNNOutputDelegate>)output{
-    _output = output;
-}
-
--(void)start{
-    if (_output == nil) {
-        return;
-    }
++(instancetype) start:(NSString*)host
+               output:(id<QNNOutputDelegate>)output
+             complete:(QNNPingCompleteHandler)complete
+             interval:(NSInteger)interval
+                count:(NSInteger)count{
+    return nil;
 }
 
 -(void)stop{
-    
+    return;
 }
 
 @end

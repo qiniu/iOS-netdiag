@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		DF2B76EC1C33702D00643678 /* QNNPing.m in Sources */ = {isa = PBXBuildFile; fileRef = DF2B76EB1C33702D00643678 /* QNNPing.m */; };
 		DF2B76F11C3B9DA100643678 /* QNNSimplePing.m in Sources */ = {isa = PBXBuildFile; fileRef = DF2B76F01C3B9DA100643678 /* QNNSimplePing.m */; };
+		DF8DFFC51C60951D00174DA9 /* QNNNslookup.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8DFFC41C60951D00174DA9 /* QNNNslookup.m */; };
+		DF8DFFD21C61DA1B00174DA9 /* TcpPingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8DFFD11C61DA1B00174DA9 /* TcpPingTest.m */; };
+		DF8DFFD41C61DA1B00174DA9 /* libNetDiag.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFCEC6451C2EC01D0058EE65 /* libNetDiag.a */; };
 		DF9D41FA1C57787500486F87 /* QNNTcpPing.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9D41F91C57787500486F87 /* QNNTcpPing.m */; };
 		DF9D41FD1C57789B00486F87 /* QNNUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9D41FC1C57789B00486F87 /* QNNUtil.m */; };
 		DF9D42001C5778B600486F87 /* QNNRtmp.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9D41FF1C5778B600486F87 /* QNNRtmp.m */; };
@@ -16,6 +19,16 @@
 		DF9D42091C57BEFD00486F87 /* QNNExternalIp.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9D42081C57BEFD00486F87 /* QNNExternalIp.m */; };
 		DFCEC6491C2EC01D0058EE65 /* QNNetDiag.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DFCEC6481C2EC01D0058EE65 /* QNNetDiag.h */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DF8DFFD51C61DA1B00174DA9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DFCEC63D1C2EC01D0058EE65 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DFCEC6441C2EC01D0058EE65;
+			remoteInfo = NetDiag;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		DFCEC6431C2EC01D0058EE65 /* CopyFiles */ = {
@@ -36,6 +49,11 @@
 		DF2B76ED1C33706900643678 /* QNNProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNProtocols.h; sourceTree = "<group>"; };
 		DF2B76EF1C3B9DA100643678 /* QNNSimplePing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNSimplePing.h; sourceTree = "<group>"; };
 		DF2B76F01C3B9DA100643678 /* QNNSimplePing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNSimplePing.m; sourceTree = "<group>"; };
+		DF8DFFC31C60951D00174DA9 /* QNNNslookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNNslookup.h; sourceTree = "<group>"; };
+		DF8DFFC41C60951D00174DA9 /* QNNNslookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNNslookup.m; sourceTree = "<group>"; };
+		DF8DFFCF1C61DA1B00174DA9 /* NetDiagTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NetDiagTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF8DFFD11C61DA1B00174DA9 /* TcpPingTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TcpPingTest.m; sourceTree = "<group>"; };
+		DF8DFFD31C61DA1B00174DA9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DF9D41F81C57787500486F87 /* QNNTcpPing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNTcpPing.h; sourceTree = "<group>"; };
 		DF9D41F91C57787500486F87 /* QNNTcpPing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNTcpPing.m; sourceTree = "<group>"; };
 		DF9D41FB1C57789B00486F87 /* QNNUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNUtil.h; sourceTree = "<group>"; };
@@ -51,6 +69,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		DF8DFFCC1C61DA1B00174DA9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DF8DFFD41C61DA1B00174DA9 /* libNetDiag.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DFCEC6421C2EC01D0058EE65 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -61,10 +87,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DF8DFFD01C61DA1B00174DA9 /* NetDiagTests */ = {
+			isa = PBXGroup;
+			children = (
+				DF8DFFD11C61DA1B00174DA9 /* TcpPingTest.m */,
+				DF8DFFD31C61DA1B00174DA9 /* Info.plist */,
+			);
+			path = NetDiagTests;
+			sourceTree = "<group>";
+		};
 		DFCEC63C1C2EC01D0058EE65 = {
 			isa = PBXGroup;
 			children = (
 				DFCEC6471C2EC01D0058EE65 /* NetDiag */,
+				DF8DFFD01C61DA1B00174DA9 /* NetDiagTests */,
 				DFCEC6461C2EC01D0058EE65 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -73,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				DFCEC6451C2EC01D0058EE65 /* libNetDiag.a */,
+				DF8DFFCF1C61DA1B00174DA9 /* NetDiagTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -96,6 +133,8 @@
 				DF9D42021C5778EA00486F87 /* QNNTraceRoute.m */,
 				DF9D42071C57BEFD00486F87 /* QNNExternalIp.h */,
 				DF9D42081C57BEFD00486F87 /* QNNExternalIp.m */,
+				DF8DFFC31C60951D00174DA9 /* QNNNslookup.h */,
+				DF8DFFC41C60951D00174DA9 /* QNNNslookup.m */,
 			);
 			path = NetDiag;
 			sourceTree = "<group>";
@@ -103,6 +142,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		DF8DFFCE1C61DA1B00174DA9 /* NetDiagTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DF8DFFD71C61DA1B00174DA9 /* Build configuration list for PBXNativeTarget "NetDiagTests" */;
+			buildPhases = (
+				DF8DFFCB1C61DA1B00174DA9 /* Sources */,
+				DF8DFFCC1C61DA1B00174DA9 /* Frameworks */,
+				DF8DFFCD1C61DA1B00174DA9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DF8DFFD61C61DA1B00174DA9 /* PBXTargetDependency */,
+			);
+			name = NetDiagTests;
+			productName = NetDiagTests;
+			productReference = DF8DFFCF1C61DA1B00174DA9 /* NetDiagTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		DFCEC6441C2EC01D0058EE65 /* NetDiag */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DFCEC64E1C2EC01D0058EE65 /* Build configuration list for PBXNativeTarget "NetDiag" */;
@@ -129,6 +186,9 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Qiniu Cloud Storage";
 				TargetAttributes = {
+					DF8DFFCE1C61DA1B00174DA9 = {
+						CreatedOnToolsVersion = 7.2;
+					};
 					DFCEC6441C2EC01D0058EE65 = {
 						CreatedOnToolsVersion = 7.2;
 					};
@@ -147,15 +207,35 @@
 			projectRoot = "";
 			targets = (
 				DFCEC6441C2EC01D0058EE65 /* NetDiag */,
+				DF8DFFCE1C61DA1B00174DA9 /* NetDiagTests */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		DF8DFFCD1C61DA1B00174DA9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		DF8DFFCB1C61DA1B00174DA9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DF8DFFD21C61DA1B00174DA9 /* TcpPingTest.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DFCEC6411C2EC01D0058EE65 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF8DFFC51C60951D00174DA9 /* QNNNslookup.m in Sources */,
 				DF2B76EC1C33702D00643678 /* QNNPing.m in Sources */,
 				DF9D41FA1C57787500486F87 /* QNNTcpPing.m in Sources */,
 				DF2B76F11C3B9DA100643678 /* QNNSimplePing.m in Sources */,
@@ -168,7 +248,35 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		DF8DFFD61C61DA1B00174DA9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DFCEC6441C2EC01D0058EE65 /* NetDiag */;
+			targetProxy = DF8DFFD51C61DA1B00174DA9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		DF8DFFD81C61DA1B00174DA9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = NetDiagTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.qiniu.NetDiagTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		DF8DFFD91C61DA1B00174DA9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = NetDiagTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.qiniu.NetDiagTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		DFCEC64C1C2EC01D0058EE65 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -270,6 +378,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		DF8DFFD71C61DA1B00174DA9 /* Build configuration list for PBXNativeTarget "NetDiagTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DF8DFFD81C61DA1B00174DA9 /* Debug */,
+				DF8DFFD91C61DA1B00174DA9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		DFCEC6401C2EC01D0058EE65 /* Build configuration list for PBXProject "NetDiag" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

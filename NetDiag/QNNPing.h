@@ -9,10 +9,32 @@
 #import <Foundation/Foundation.h>
 #import "QNNProtocols.h"
 
-@interface QNNPing : NSObject
+@interface QNNPingResult : NSObject
 
--(instancetype) init:(NSString*)dest;
+@property (readonly) NSInteger code;
+@property (readonly) NSInteger maxRtt;
+@property (readonly) NSInteger minRtt;
+@property (readonly) NSInteger avgRtt;
+@property (readonly) double lossRate;
+@property (readonly) NSInteger count;
+@property (readonly) NSInteger interval;
 
--(instancetype) init:(NSString*)dest count:(int)count;
+-(NSString*) description;
+
+@end
+
+typedef void (^QNNPingCompleteHandler)(QNNPingResult*) ;
+
+@interface QNNPing : NSObject<QNNStopDelegate>
+
++(instancetype) start:(NSString*)host
+               output:(id<QNNOutputDelegate>)output
+             complete:(QNNPingCompleteHandler)complete;
+
++(instancetype) start:(NSString*)host
+               output:(id<QNNOutputDelegate>)output
+             complete:(QNNPingCompleteHandler)complete
+             interval:(NSInteger)interval
+                count:(NSInteger)count;
 
 @end

@@ -9,12 +9,15 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol QNNOutputDelegate <NSObject>
+@protocol QNNStopDelegate <NSObject>
 
--(void) Write:(NSString*)line;
-
-@optional
--(void) setMaxLine:(int)number;
--(void) end;
+-(void) stop;
 
 @end
+
+@protocol QNNOutputDelegate <NSObject>
+
+-(void) write:(NSString*)line;
+
+@end
+
