@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A6296E24683C84AC5548DB39 /* libPods-NetDiagTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F50835689CBA65323B9B2AA7 /* libPods-NetDiagTests.a */; };
 		DF2B76EC1C33702D00643678 /* QNNPing.m in Sources */ = {isa = PBXBuildFile; fileRef = DF2B76EB1C33702D00643678 /* QNNPing.m */; };
 		DF2B76F11C3B9DA100643678 /* QNNSimplePing.m in Sources */ = {isa = PBXBuildFile; fileRef = DF2B76F01C3B9DA100643678 /* QNNSimplePing.m */; };
 		DF8DFFC51C60951D00174DA9 /* QNNNslookup.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8DFFC41C60951D00174DA9 /* QNNNslookup.m */; };
 		DF8DFFD21C61DA1B00174DA9 /* TcpPingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8DFFD11C61DA1B00174DA9 /* TcpPingTest.m */; };
 		DF8DFFD41C61DA1B00174DA9 /* libNetDiag.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFCEC6451C2EC01D0058EE65 /* libNetDiag.a */; };
+		DF8DFFDC1C61E6B200174DA9 /* QNTestLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8DFFDB1C61E6B200174DA9 /* QNTestLogger.m */; };
 		DF9D41FA1C57787500486F87 /* QNNTcpPing.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9D41F91C57787500486F87 /* QNNTcpPing.m */; };
 		DF9D41FD1C57789B00486F87 /* QNNUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9D41FC1C57789B00486F87 /* QNNUtil.m */; };
 		DF9D42001C5778B600486F87 /* QNNRtmp.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9D41FF1C5778B600486F87 /* QNNRtmp.m */; };
@@ -44,6 +46,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		32AB6E052E20B19230FF87D1 /* Pods-NetDiagTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetDiagTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NetDiagTests/Pods-NetDiagTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DF2B76EA1C33702D00643678 /* QNNPing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNPing.h; sourceTree = "<group>"; };
 		DF2B76EB1C33702D00643678 /* QNNPing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNPing.m; sourceTree = "<group>"; };
 		DF2B76ED1C33706900643678 /* QNNProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNProtocols.h; sourceTree = "<group>"; };
@@ -54,6 +57,8 @@
 		DF8DFFCF1C61DA1B00174DA9 /* NetDiagTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NetDiagTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF8DFFD11C61DA1B00174DA9 /* TcpPingTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TcpPingTest.m; sourceTree = "<group>"; };
 		DF8DFFD31C61DA1B00174DA9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DF8DFFDA1C61E6B200174DA9 /* QNTestLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNTestLogger.h; sourceTree = "<group>"; };
+		DF8DFFDB1C61E6B200174DA9 /* QNTestLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNTestLogger.m; sourceTree = "<group>"; };
 		DF9D41F81C57787500486F87 /* QNNTcpPing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNTcpPing.h; sourceTree = "<group>"; };
 		DF9D41F91C57787500486F87 /* QNNTcpPing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNTcpPing.m; sourceTree = "<group>"; };
 		DF9D41FB1C57789B00486F87 /* QNNUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNUtil.h; sourceTree = "<group>"; };
@@ -66,6 +71,8 @@
 		DF9D42081C57BEFD00486F87 /* QNNExternalIp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNExternalIp.m; sourceTree = "<group>"; };
 		DFCEC6451C2EC01D0058EE65 /* libNetDiag.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libNetDiag.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFCEC6481C2EC01D0058EE65 /* QNNetDiag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNNetDiag.h; sourceTree = "<group>"; };
+		E7FCF14D691EF09CEBD2808D /* Pods-NetDiagTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetDiagTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-NetDiagTests/Pods-NetDiagTests.release.xcconfig"; sourceTree = "<group>"; };
+		F50835689CBA65323B9B2AA7 /* libPods-NetDiagTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NetDiagTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +81,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF8DFFD41C61DA1B00174DA9 /* libNetDiag.a in Frameworks */,
+				A6296E24683C84AC5548DB39 /* libPods-NetDiagTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,11 +95,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C4135454D851F8DF38E206F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				32AB6E052E20B19230FF87D1 /* Pods-NetDiagTests.debug.xcconfig */,
+				E7FCF14D691EF09CEBD2808D /* Pods-NetDiagTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		7EC51E005E7B857726052BEF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F50835689CBA65323B9B2AA7 /* libPods-NetDiagTests.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		DF8DFFD01C61DA1B00174DA9 /* NetDiagTests */ = {
 			isa = PBXGroup;
 			children = (
 				DF8DFFD11C61DA1B00174DA9 /* TcpPingTest.m */,
 				DF8DFFD31C61DA1B00174DA9 /* Info.plist */,
+				DF8DFFDA1C61E6B200174DA9 /* QNTestLogger.h */,
+				DF8DFFDB1C61E6B200174DA9 /* QNTestLogger.m */,
 			);
 			path = NetDiagTests;
 			sourceTree = "<group>";
@@ -102,6 +129,8 @@
 				DFCEC6471C2EC01D0058EE65 /* NetDiag */,
 				DF8DFFD01C61DA1B00174DA9 /* NetDiagTests */,
 				DFCEC6461C2EC01D0058EE65 /* Products */,
+				0C4135454D851F8DF38E206F /* Pods */,
+				7EC51E005E7B857726052BEF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -146,9 +175,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DF8DFFD71C61DA1B00174DA9 /* Build configuration list for PBXNativeTarget "NetDiagTests" */;
 			buildPhases = (
+				8E2B56729DA1DBF78DC0ECCD /* Check Pods Manifest.lock */,
 				DF8DFFCB1C61DA1B00174DA9 /* Sources */,
 				DF8DFFCC1C61DA1B00174DA9 /* Frameworks */,
 				DF8DFFCD1C61DA1B00174DA9 /* Resources */,
+				C6B07ACD4B0204ECA7C9F9D1 /* Embed Pods Frameworks */,
+				01D7D266B699C1B26832D32F /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -222,11 +254,60 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		01D7D266B699C1B26832D32F /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NetDiagTests/Pods-NetDiagTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8E2B56729DA1DBF78DC0ECCD /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C6B07ACD4B0204ECA7C9F9D1 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NetDiagTests/Pods-NetDiagTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		DF8DFFCB1C61DA1B00174DA9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF8DFFDC1C61E6B200174DA9 /* QNTestLogger.m in Sources */,
 				DF8DFFD21C61DA1B00174DA9 /* TcpPingTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -259,6 +340,7 @@
 /* Begin XCBuildConfiguration section */
 		DF8DFFD81C61DA1B00174DA9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 32AB6E052E20B19230FF87D1 /* Pods-NetDiagTests.debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = NetDiagTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -269,6 +351,7 @@
 		};
 		DF8DFFD91C61DA1B00174DA9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E7FCF14D691EF09CEBD2808D /* Pods-NetDiagTests.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = NetDiagTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -385,6 +468,7 @@
 				DF8DFFD91C61DA1B00174DA9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DFCEC6401C2EC01D0058EE65 /* Build configuration list for PBXProject "NetDiag" */ = {
 			isa = XCConfigurationList;

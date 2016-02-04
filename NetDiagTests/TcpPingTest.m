@@ -8,6 +8,11 @@
 
 #import <XCTest/XCTest.h>
 
+#import <AGAsyncTestHelper.h>
+
+#import "QNNTcpPing.h"
+#import "QNTestLogger.h"
+
 @interface NetDiagTests : XCTestCase
 
 @end
@@ -25,16 +30,26 @@
 }
 
 - (void)testFail {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
 }
 
 - (void)testTimeout{
     
 }
 
-- (void)testOK{
+-(void)testStop{
     
+}
+
+- (void)testOK{
+    __block BOOL run = NO;
+    id<QNNStopDelegate> h = [QNNTcpPing start:@"www.baidu.com" output:[[QNTestLogger alloc]init] complete:^(QNNTcpPingResult * r) {
+        XCTAssertNotNil(r, @"need result");
+        XCTAssertEqual(0, r.code, @"normal code");
+        run = YES;
+    }];
+    
+    AGWW_WAIT_WHILE(!run, 30.0);
+    XCTAssert(run, @"PASS");
 }
 
 
