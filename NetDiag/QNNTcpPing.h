@@ -12,9 +12,9 @@
 @interface QNNTcpPingResult : NSObject
 
 @property (readonly) NSInteger code;
-@property (readonly) NSTimeInterval maxRtt;
-@property (readonly) NSTimeInterval minRtt;
-@property (readonly) NSTimeInterval avgRtt;
+@property (readonly) NSTimeInterval maxTime;
+@property (readonly) NSTimeInterval minTime;
+@property (readonly) NSTimeInterval avgTime;
 @property (readonly) NSInteger count;
 
 -(NSString*) description;
@@ -40,8 +40,8 @@ typedef void (^QNNTcpPingCompleteHandler)(QNNTcpPingResult*);
 
 +(instancetype) start:(NSString*)host
                  port:(NSUInteger)port
+                count:(NSInteger)count
                output:(id<QNNOutputDelegate>)output
-             complete:(QNNTcpPingCompleteHandler)complete
-                count:(NSInteger)count;
+             complete:(QNNTcpPingCompleteHandler)complete;
 
 @end

@@ -21,9 +21,9 @@
 @interface QNNTcpPingResult()
 
 -(instancetype)init:(NSInteger)code
-                max:(NSTimeInterval)maxRtt
-                min:(NSTimeInterval)minRtt
-                avg:(NSTimeInterval)avgRtt
+                max:(NSTimeInterval)maxTime
+                min:(NSTimeInterval)minTime
+                avg:(NSTimeInterval)avgTime
               count:(NSInteger)count;
 @end
 
@@ -32,20 +32,21 @@
 
 -(NSString*) description{
     if (_code == 0) {
-        return [NSString stringWithFormat:@"tcp connect min/avg/max = %f/%f/%fms", _minRtt, _avgRtt, _maxRtt];
+        return [NSString stringWithFormat:@"tcp connect min/avg/max = %f/%f/%fms", _minTime, _avgTime, _maxTime];
     }
     return [NSString stringWithFormat:@"tcp connect failed %d", _code];
 }
 
 -(instancetype)init:(NSInteger)code
-                max:(NSTimeInterval)maxRtt
-                min:(NSTimeInterval)minRtt
-                avg:(NSTimeInterval)avgRtt
+                max:(NSTimeInterval)maxTime
+                min:(NSTimeInterval)minTime
+                avg:(NSTimeInterval)avgTime
               count:(NSInteger)count{
     if (self = [super init]) {
         _code = code;
-        _minRtt = minRtt;
-        _avgRtt = avgRtt;
+        _minTime = minTime;
+        _avgTime = avgTime;
+        _maxTime = maxTime;
         _count = count;
     }
     return self;
@@ -84,7 +85,7 @@
 }
 
 -(void) run{
-    [self.output write:[NSString stringWithFormat:@"connect to host %@ ...\n", _host]];
+    [self.output write:[NSString stringWithFormat:@"connect to host %@:%d ...\n", _host, _port]];
     struct sockaddr_in addr;
     memset(&addr, 0, sizeof(addr));
     addr.sin_len = sizeof(addr);
@@ -103,24 +104,35 @@
             return;
         }
         addr.sin_addr = *(struct in_addr *)host->h_addr;
-        [self.output write:[NSString stringWithFormat:@"connect to ip %s ...\n", inet_ntoa(addr.sin_addr)]];
+        [self.output write:[NSString stringWithFormat:@"connect to ip %s:%d ...\n", inet_ntoa(addr.sin_addr), _port]];
     }
     
     NSTimeInterval* intervals = (NSTimeInterval*)malloc(sizeof(NSTimeInterval)*_count);
     NSInteger index = 0;
+    int r = 0;
     do {
         NSDate* t1 = [NSDate date];
-        [self connect:&addr];
+        r = [self connect:&addr];
         NSTimeInterval duration = [[NSDate date] timeIntervalSinceDate:t1];
         intervals[_index] = duration;
-        [self.output write:[NSString stringWithFormat:@"connected to ip %s, %f ms\n", inet_ntoa(addr.sin_addr), duration*1000]];
-        if (index < _count) {
+        if (r == 0) {
+            [self.output write:[NSString stringWithFormat:@"connected to %s:%d, %f ms\n", inet_ntoa(addr.sin_addr), _port, duration*1000]];
+        }else{
+            [self.output write:[NSString stringWithFormat:@"connect failed to %s:%d, %f ms, error %d\n", inet_ntoa(addr.sin_addr), _port, duration*1000, r]];
+        }
+        
+        if (index < _count && !_stopped && r == 0) {
             [NSThread sleepForTimeInterval:0.1];
         }
-    } while (++index < _count && !_stopped);
+    } while (++index < _count && !_stopped && r == 0);
+    
     if (_complete) {
+        NSInteger code = r;
+        if(_stopped){
+            code = kQNNRequestStoped;
+        }
         dispatch_async(dispatch_get_main_queue(), ^(void) {
-            _complete([self buildResult:0 durations:intervals count:index]);
+            _complete([self buildResult:code durations:intervals count:index]);
         });
     }
     free(intervals);
@@ -176,20 +188,22 @@
 +(instancetype) start:(NSString*)host
                output:(id<QNNOutputDelegate>)output
              complete:(QNNTcpPingCompleteHandler)complete{
-    return  [QNNTcpPing start:host port:80 output:output complete:complete count:3];
+    return  [QNNTcpPing start:host port:80  count:3 output:output complete:complete];
 }
 
 +(instancetype) start:(NSString*)host
-                  port:(NSUInteger)port
+                 port:(NSUInteger)port
+                count:(NSInteger)count
                output:(id<QNNOutputDelegate>)output
-             complete:(QNNTcpPingCompleteHandler)complete
-                count:(NSInteger)count{
+             complete:(QNNTcpPingCompleteHandler)complete;{
     QNNTcpPing* t = [[QNNTcpPing alloc] init:host
                                 port:port
                               output:output
                             complete:complete
                                count:count];
-    [t run];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
+        [t run];
+    });
     return t;
 }
 

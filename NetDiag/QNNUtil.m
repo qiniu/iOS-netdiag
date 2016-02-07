@@ -8,6 +8,8 @@
 
 #import "QNNUtil.h"
 
+const int kQNNRequestStoped = -2;
+
 @implementation QNNUtil
 
 @end
