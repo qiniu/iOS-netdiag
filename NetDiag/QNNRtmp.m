@@ -152,7 +152,7 @@ static int writeAll(int sock, const char *buffer, int n){
     return ptr-buffer;
 }
 
-static int HandShake(int sock){
+static int handShake(int sock){
     int i;
     uint32_t uptime, suptime;
     int bMatch;
@@ -387,7 +387,7 @@ static int HandShake(int sock){
     if (err != 0) {
         return err;
     }
-    
+    handShake(0);
     
 }
 
