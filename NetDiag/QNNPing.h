@@ -12,9 +12,9 @@
 @interface QNNPingResult : NSObject
 
 @property (readonly) NSInteger code;
-@property (readonly) NSInteger maxRtt;
-@property (readonly) NSInteger minRtt;
-@property (readonly) NSInteger avgRtt;
+@property (readonly) NSTimeInterval maxRtt;
+@property (readonly) NSTimeInterval minRtt;
+@property (readonly) NSTimeInterval avgRtt;
 @property (readonly) double lossRate;
 @property (readonly) NSInteger count;
 @property (readonly) NSInteger interval;

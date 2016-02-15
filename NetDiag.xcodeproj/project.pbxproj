@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		A6296E24683C84AC5548DB39 /* libPods-NetDiagTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F50835689CBA65323B9B2AA7 /* libPods-NetDiagTests.a */; };
 		DF2B76EC1C33702D00643678 /* QNNPing.m in Sources */ = {isa = PBXBuildFile; fileRef = DF2B76EB1C33702D00643678 /* QNNPing.m */; };
-		DF2B76F11C3B9DA100643678 /* QNNSimplePing.m in Sources */ = {isa = PBXBuildFile; fileRef = DF2B76F01C3B9DA100643678 /* QNNSimplePing.m */; };
 		DF8DFFC51C60951D00174DA9 /* QNNNslookup.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8DFFC41C60951D00174DA9 /* QNNNslookup.m */; };
 		DF8DFFD21C61DA1B00174DA9 /* TcpPingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8DFFD11C61DA1B00174DA9 /* TcpPingTest.m */; };
 		DF8DFFD41C61DA1B00174DA9 /* libNetDiag.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFCEC6451C2EC01D0058EE65 /* libNetDiag.a */; };
@@ -55,8 +54,6 @@
 		DF2B76EA1C33702D00643678 /* QNNPing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNPing.h; sourceTree = "<group>"; };
 		DF2B76EB1C33702D00643678 /* QNNPing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNPing.m; sourceTree = "<group>"; };
 		DF2B76ED1C33706900643678 /* QNNProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNProtocols.h; sourceTree = "<group>"; };
-		DF2B76EF1C3B9DA100643678 /* QNNSimplePing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNSimplePing.h; sourceTree = "<group>"; };
-		DF2B76F01C3B9DA100643678 /* QNNSimplePing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNSimplePing.m; sourceTree = "<group>"; };
 		DF8DFFC31C60951D00174DA9 /* QNNNslookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNNslookup.h; sourceTree = "<group>"; };
 		DF8DFFC41C60951D00174DA9 /* QNNNslookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNNslookup.m; sourceTree = "<group>"; };
 		DF8DFFCF1C61DA1B00174DA9 /* NetDiagTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NetDiagTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -166,8 +163,6 @@
 				DF2B76EA1C33702D00643678 /* QNNPing.h */,
 				DF2B76EB1C33702D00643678 /* QNNPing.m */,
 				DF2B76ED1C33706900643678 /* QNNProtocols.h */,
-				DF2B76EF1C3B9DA100643678 /* QNNSimplePing.h */,
-				DF2B76F01C3B9DA100643678 /* QNNSimplePing.m */,
 				DF9D41F81C57787500486F87 /* QNNTcpPing.h */,
 				DF9D41F91C57787500486F87 /* QNNTcpPing.m */,
 				DF9D41FB1C57789B00486F87 /* QNNUtil.h */,
@@ -340,7 +335,6 @@
 				DF8DFFC51C60951D00174DA9 /* QNNNslookup.m in Sources */,
 				DF2B76EC1C33702D00643678 /* QNNPing.m in Sources */,
 				DF9D41FA1C57787500486F87 /* QNNTcpPing.m in Sources */,
-				DF2B76F11C3B9DA100643678 /* QNNSimplePing.m in Sources */,
 				DF9D42091C57BEFD00486F87 /* QNNExternalIp.m in Sources */,
 				DF9D42001C5778B600486F87 /* QNNRtmp.m in Sources */,
 				DF9D41FD1C57789B00486F87 /* QNNUtil.m in Sources */,

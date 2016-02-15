@@ -63,7 +63,6 @@
 @property (readonly) NSInteger interval;
 @property (readonly) NSInteger count;
 @property (atomic) BOOL stopped;
-@property NSUInteger index;
 @end
 
 @implementation QNNTcpPing
@@ -114,7 +113,7 @@
         NSDate* t1 = [NSDate date];
         r = [self connect:&addr];
         NSTimeInterval duration = [[NSDate date] timeIntervalSinceDate:t1];
-        intervals[_index] = duration;
+        intervals[index] = duration;
         if (r == 0) {
             [self.output write:[NSString stringWithFormat:@"connected to %s:%d, %f ms\n", inet_ntoa(addr.sin_addr), _port, duration*1000]];
         }else{
