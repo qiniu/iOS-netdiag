@@ -9,6 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "QNNProtocols.h"
 
+extern const int kQNNRtmpServerVersionError;
+extern const int kQNNRtmpServerSignatureError;
+extern const int kQNNRtmpServerTimeError;
+
+
 @interface QNNRtmpHandshakeResult : NSObject
 
 @property (readonly) NSInteger code;

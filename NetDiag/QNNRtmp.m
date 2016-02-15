@@ -17,128 +17,77 @@
 
 #import "QNNRtmp.h"
 
+const int kQNNRtmpServerVersionError = -20001;
+const int kQNNRtmpServerSignatureError = -20002;
+const int kQNNRtmpServerTimeError = -20003;
+
+
 #define RTMP_SIG_SIZE 1536
 
-int PILI_RTMPSockBuf_Fill(PILI_RTMPSockBuf *sb)
-{
-    int nBytes;
-    
-    if (!sb->sb_size){
-        sb->sb_start = sb->sb_buf;
-    }
-    
-    while (1)
-    {
-        nBytes = sizeof(sb->sb_buf) - sb->sb_size - (sb->sb_start - sb->sb_buf);
-        {
-            nBytes = recv(sb->sb_socket, sb->sb_start + sb->sb_size, nBytes, 0);
-        }
-        if (nBytes != -1)
-        {
-            sb->sb_size += nBytes;
-        }else{
-            int sockerr = errno;
-            RTMP_Log(RTMP_LOGDEBUG, "%s, recv returned %d. GetSockError(): %d (%s)",
-                     __FUNCTION__, nBytes, sockerr, strerror(sockerr));
+/* needs to fit largest number of bytes recv() may return */
+#define RTMP_BUFFER_CACHE_SIZE (16*1024)
+
+struct sock_ret{
+    int count;
+    int error_code;
+};
+
+//static BOOL isTimeout(int sockerr){
+//    return sockerr == EWOULDBLOCK || sockerr == EAGAIN;
+//}
+
+static struct sock_ret readIntoBuffer(int sock, char* buf, int buf_size){
+    int n = 0;
+    int sockerr = 0;
+    while (1){
+        n = recv(sock, buf, buf_size, 0);
+        if (n == -1){
+            sockerr = errno;
             if (sockerr == EINTR){
                 continue;
-            }
-            
-            if (sockerr == EWOULDBLOCK || sockerr == EAGAIN){
-                sb->sb_timedout = TRUE;
-                nBytes = 0;
             }
         }
         break;
     }
     
-    return nBytes;
+    struct sock_ret ret;
+    ret.count = n;
+    ret.error_code = sockerr;
+    return ret;
 }
 
-static int readAll(int sock, char *buffer, int n){
-    int nOriginalSize = n;
-    int avail;
-    char *ptr;
-    
-    ptr = buffer;
-    while (n > 0){
-        int nBytes = 0, nRead;
-        avail = r->m_sb.sb_size;
-        if (avail == 0){
-            if (PILI_RTMPSockBuf_Fill(&r->m_sb) < 1){
-                if (!r->m_sb.sb_timedout) {
-                    PILI_RTMP_Close(r, NULL);
-                } else {
-                    RTMPError error = {0};
-                    
-                    char msg[100];
-                    memset(msg, 0, 100);
-                    strcat(msg, "PILI_RTMP socket timeout");
-                    RTMPError_Alloc(&error, strlen(msg));
-                    error.code = RTMPErrorSocketTimeout;
-                    strcpy(error.message, msg);
-                    
-                    PILI_RTMP_Close(r, &error);
-                    
-                    RTMPError_Free(&error);
-                }
-                
-                return 0;
-            }
-            avail = r->m_sb.sb_size;
+
+static struct sock_ret readAll(int sock, char *buffer, int size){
+    int pos = 0;
+    struct sock_ret ret;
+    ret.count = 0;
+    ret.error_code = 0;
+    while (pos < size){
+        ret = readIntoBuffer(sock, buffer+pos, size - pos);
+        if(ret.count == -1){
+            return ret;
         }
-        nRead = ((n < avail) ? n : avail);
-        if (nRead > 0)
-        {
-            memcpy(ptr, r->m_sb.sb_start, nRead);
-            r->m_sb.sb_start += nRead;
-            r->m_sb.sb_size -= nRead;
-            nBytes = nRead;
-            r->m_nBytesIn += nRead;
-            if (r->m_bSendCounter && r->m_nBytesIn > r->m_nBytesInSent + r->m_nClientBW / 2){
-                SendBytesReceived(r, NULL);
-            }
-        }
-        /*RTMP_Log(RTMP_LOGDEBUG, "%s: %d bytes\n", __FUNCTION__, nBytes); */
-        
-        if (nBytes == 0)
-        {
-            RTMP_Log(RTMP_LOGDEBUG, "%s, PILI_RTMP socket closed by peer", __FUNCTION__);
-            /*goto again; */
-            RTMPError error = {0};
-            
-            char msg[100];
-            memset(msg, 0, 100);
-            strcat(msg, "PILI_RTMP socket closed by peer. ");
-            RTMPError_Alloc(&error, strlen(msg));
-            error.code = RTMPErrorSocketClosedByPeer;
-            strcpy(error.message, msg);
-            
-            PILI_RTMP_Close(r, &error);
-            
-            RTMPError_Free(&error);
-            break;
-        }
-        
-        n -= nBytes;
-        ptr += nBytes;
+        pos += ret.count;
     }
-    
-    return nOriginalSize - n;
+    return ret;
 }
 
-static int writeAll(int sock, const char *buffer, int n){
+static struct sock_ret writeAll(int sock, const char *buffer, int n){
     const char *ptr = buffer;
-    
+    struct sock_ret ret;
+    ret.count = 0;
+    ret.error_code = 0;
     while (n > 0){
-        int nBytes = send(sock, buffer, len, 0);
+        int nBytes = send(sock, buffer, n, 0);
         if (nBytes < 0)
         {
             int sockerr = errno;
             if (sockerr == EINTR ){
                 continue;
             }
-            return sockerr;
+            ret.count = -1;
+            ret.error_code = sockerr;
+            return ret;
         }
         
         if (nBytes == 0){
@@ -148,73 +97,56 @@ static int writeAll(int sock, const char *buffer, int n){
         n -= nBytes;
         ptr += nBytes;
     }
+    ret.count = ptr -buffer;
     
-    return ptr-buffer;
+    return ret;
 }
 
-static int handShake(int sock){
-    int i;
-    uint32_t uptime, suptime;
-    int bMatch;
-    char type;
-    char clientbuf[RTMP_SIG_SIZE + 1], *clientsig = clientbuf + 1;
-    char serversig[RTMP_SIG_SIZE];
+static char* init_c0_c1(char* buff){
+    buff[0] = 0x03;		/* not encrypted */
+    char* client_sig = buff + 1;
+    uint32_t uptime = htonl(0); // get time, to do
+    memcpy(client_sig, &uptime, 4);
     
-    clientbuf[0] = 0x03;		/* not encrypted */
+    memset(&client_sig[4], 0, 4);
     
-    uptime = htonl(PILI_RTMP_GetTime());
-    memcpy(clientsig, &uptime, 4);
-    
-    memset(&clientsig[4], 0, 4);
-    
-    for (i = 8; i < RTMP_SIG_SIZE; i++){
-        clientsig[i] = (char)(rand() % 256);
+    for (int i = 8; i < RTMP_SIG_SIZE; i++){
+        client_sig[i] = (char)(rand() % 256);
     }
-    int code = writeAll(r, clientbuf, RTMP_SIG_SIZE + 1)<0;
-    if (code < 0){
-        return code;
-    }
-    
-    if (ReadN(r, &type, 1) != 1)	/* 0x03 or 0x06 */{
-        return FALSE;
-    }
-    
-    
-    RTMP_Log(RTMP_LOGDEBUG, "%s: Type Answer   : %02X", __FUNCTION__, type);
-    
-    if (type != clientbuf[0]){
-        RTMP_Log(RTMP_LOGWARNING, "%s: Type mismatch: client sent %d, server answered %d",
-                 __FUNCTION__, clientbuf[0], type);
-    }
+    return buff;
+}
 
-    
-    if (ReadN(r, serversig, RTMP_SIG_SIZE) != RTMP_SIG_SIZE){
-        return FALSE;
+static struct sock_ret send_c0_c1(int sock, char* c0_c1){
+    return writeAll(sock, c0_c1, RTMP_SIG_SIZE + 1);
+}
+
+
+static struct sock_ret send_c2(int sock, char* c2){
+    return writeAll(sock, c2, RTMP_SIG_SIZE);
+}
+
+static int verify_s0_s1(int sock, char* s0_s1){
+    struct sock_ret ret = readAll(sock, s0_s1, RTMP_SIG_SIZE + 1);
+    if(ret.count ==-1){
+        return ret.error_code;
+    }
+    char s0 = s0_s1[0];
+    if(s0 != 0x03){
+        return kQNNRtmpServerVersionError;
     }
     
-    /* decode server response */
-    
-    memcpy(&suptime, serversig, 4);
-    suptime = ntohl(suptime);
-    
-    RTMP_Log(RTMP_LOGDEBUG, "%s: Server Uptime : %d", __FUNCTION__, suptime);
-    RTMP_Log(RTMP_LOGDEBUG, "%s: FMS Version   : %d.%d.%d.%d", __FUNCTION__,
-             serversig[4], serversig[5], serversig[6], serversig[7]);
-    
-    /* 2nd part of handshake */
-    if (!WriteN(r, serversig, RTMP_SIG_SIZE, error)){
-        return FALSE;
+    return 0;
+}
+
+static int verify_s2(int sock, char* server_sig, char* client_sig){
+    struct sock_ret ret = readAll(sock, server_sig, RTMP_SIG_SIZE);
+    if(ret.error_code != 0){
+        return ret.error_code;
     }
-    
-    if (ReadN(r, serversig, RTMP_SIG_SIZE) != RTMP_SIG_SIZE){
-        return FALSE;
+    if (memcmp(server_sig, server_sig, RTMP_SIG_SIZE) != 0) {
+        return kQNNRtmpServerSignatureError;
     }
-    
-    bMatch = (memcmp(serversig, clientsig, RTMP_SIG_SIZE) == 0);
-    if (!bMatch){
-        RTMP_Log(RTMP_LOGWARNING, "%s, client signature does not match!", __FUNCTION__);
-    }
-    return TRUE;
+    return 0;
 }
 
 @interface QNNRtmpHandshakeResult()
@@ -311,13 +243,15 @@ static int handShake(int sock){
     int r = 0;
     do {
         NSDate* t1 = [NSDate date];
-        r = [self connect:&addr];
+        
+        r = [self handShake:&addr start:t1];
+        
         NSTimeInterval duration = [[NSDate date] timeIntervalSinceDate:t1];
         intervals[_index] = duration;
         if (r == 0) {
-            [self.output write:[NSString stringWithFormat:@"connected to %s:%d, %f ms\n", inet_ntoa(addr.sin_addr), _port, duration*1000]];
+            [self.output write:[NSString stringWithFormat:@"rtmp handshake to %s:%d, %f ms\n", inet_ntoa(addr.sin_addr), _port, duration*1000]];
         }else{
-            [self.output write:[NSString stringWithFormat:@"connect failed to %s:%d, %f ms, error %d\n", inet_ntoa(addr.sin_addr), _port, duration*1000, r]];
+            [self.output write:[NSString stringWithFormat:@"rtmp handshake failed to %s:%d, %f ms, error %d\n", inet_ntoa(addr.sin_addr), _port, duration*1000, r]];
         }
         
         if (index < _count && !_stopped && r == 0) {
@@ -338,8 +272,8 @@ static int handShake(int sock){
 }
 
 -(QNNRtmpHandshakeResult*)buildResult:(NSInteger)code
-                      durations:(NSTimeInterval*)durations
-                          count:(NSInteger)count{
+                            durations:(NSTimeInterval*)durations
+                                count:(NSInteger)count{
     if (code < 0) {
         return [[QNNRtmpHandshakeResult alloc] init:code max:0 min:0 avg:0 count:1];
     }
@@ -356,10 +290,38 @@ static int handShake(int sock){
         sum += durations[i];
     }
     NSTimeInterval avg = sum/count;
-    return [[QNNRtmpHandshakeResult alloc]init:0 max:max min:min avg:avg count:count];
+    return [[QNNRtmpHandshakeResult alloc]init:code max:max min:min avg:avg count:count];
 }
 
--(NSInteger) connect:(struct sockaddr_in*) addr{
+-(NSInteger) handShakeSocket:(int)sock{
+    char client_buf[RTMP_SIG_SIZE + 1], *client_sig = client_buf + 1;
+    char server_buf[RTMP_SIG_SIZE + 1], *server_sig = server_buf + 1;
+    char* c0_c1 = init_c0_c1(client_buf);
+    struct sock_ret ret = send_c0_c1(sock, c0_c1);
+    if (ret.count == -1) {
+        close(sock);
+        return ret.error_code;
+    }
+    
+    int r = verify_s0_s1(sock, server_buf);
+    if (r != 0) {
+        close(sock);
+        return r;
+    }
+    
+    ret = send_c2(sock, server_sig);
+    if (ret.count == -1) {
+        close(sock);
+        return ret.error_code;
+    }
+    
+    r = verify_s2(sock, server_sig, client_sig);
+    close(sock);
+    return ret.error_code;
+}
+
+-(NSInteger)handShake:(struct sockaddr_in*) addr
+                start:(NSDate*)start{
     int sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (sock == -1) {
         return errno;
@@ -379,22 +341,16 @@ static int handShake(int sock){
         close(sock);
         return err;
     }
-    return 0;
-}
-
--(NSInteger)handshake:(struct sockaddr_in*) addr{
-    NSInteger err = [self connect:addr];
-    if (err != 0) {
-        return err;
-    }
-    handShake(0);
+    NSTimeInterval duration = [[NSDate date] timeIntervalSinceDate:start];
+    [self.output write:[NSString stringWithFormat:@"rtmp connect to %s:%d, %f ms\n", inet_ntoa(addr->sin_addr), _port, duration*1000]];
+    return [self handShakeSocket:sock];
     
 }
 
 +(instancetype) start:(NSString*)host
                output:(id<QNNOutputDelegate>)output
              complete:(QNNRtmpHandshakeCompleteHandler)complete{
-    return  [QNNRtmpHandshake start:host port:80  count:3 output:output complete:complete];
+    return  [QNNRtmpHandshake start:host port:1935  count:2 output:output complete:complete];
 }
 
 +(instancetype) start:(NSString*)host
@@ -403,10 +359,10 @@ static int handShake(int sock){
                output:(id<QNNOutputDelegate>)output
              complete:(QNNRtmpHandshakeCompleteHandler)complete;{
     QNNRtmpHandshake* t = [[QNNRtmpHandshake alloc] init:host
-                                        port:port
-                                      output:output
-                                    complete:complete
-                                       count:count];
+                                                    port:port
+                                                  output:output
+                                                complete:complete
+                                                   count:count];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
         [t run];
     });

@@ -6,9 +6,9 @@
 //  Copyright © 2016年 Qiniu Cloud Storage. All rights reserved.
 //
 
-#import "QNTestLogger.h"
+#import "QNNTestLogger.h"
 
-@implementation QNTestLogger
+@implementation QNNTestLogger
 
 -(void) write:(NSString*)line{
     NSLog(line);

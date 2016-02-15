@@ -13,12 +13,17 @@
 		DF8DFFC51C60951D00174DA9 /* QNNNslookup.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8DFFC41C60951D00174DA9 /* QNNNslookup.m */; };
 		DF8DFFD21C61DA1B00174DA9 /* TcpPingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8DFFD11C61DA1B00174DA9 /* TcpPingTest.m */; };
 		DF8DFFD41C61DA1B00174DA9 /* libNetDiag.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFCEC6451C2EC01D0058EE65 /* libNetDiag.a */; };
-		DF8DFFDC1C61E6B200174DA9 /* QNTestLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8DFFDB1C61E6B200174DA9 /* QNTestLogger.m */; };
+		DF8DFFDC1C61E6B200174DA9 /* QNNTestLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8DFFDB1C61E6B200174DA9 /* QNNTestLogger.m */; };
 		DF9D41FA1C57787500486F87 /* QNNTcpPing.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9D41F91C57787500486F87 /* QNNTcpPing.m */; };
 		DF9D41FD1C57789B00486F87 /* QNNUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9D41FC1C57789B00486F87 /* QNNUtil.m */; };
 		DF9D42001C5778B600486F87 /* QNNRtmp.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9D41FF1C5778B600486F87 /* QNNRtmp.m */; };
 		DF9D42031C5778EA00486F87 /* QNNTraceRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9D42021C5778EA00486F87 /* QNNTraceRoute.m */; };
 		DF9D42091C57BEFD00486F87 /* QNNExternalIp.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9D42081C57BEFD00486F87 /* QNNExternalIp.m */; };
+		DFA9E1761C6B350800C17111 /* QNNHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA9E1751C6B350800C17111 /* QNNHttp.m */; };
+		DFA9E1781C6C8FE800C17111 /* RtmpTest.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA9E1771C6C8FE800C17111 /* RtmpTest.m */; };
+		DFA9E17A1C6DB06D00C17111 /* NslookupTest.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA9E1791C6DB06D00C17111 /* NslookupTest.m */; };
+		DFA9E17C1C6DB22C00C17111 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DFA9E17B1C6DB22C00C17111 /* libresolv.tbd */; };
+		DFA9E17E1C708A0000C17111 /* QNNHttpTest.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA9E17D1C708A0000C17111 /* QNNHttpTest.m */; };
 		DFCEC6491C2EC01D0058EE65 /* QNNetDiag.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DFCEC6481C2EC01D0058EE65 /* QNNetDiag.h */; };
 /* End PBXBuildFile section */
 
@@ -57,8 +62,8 @@
 		DF8DFFCF1C61DA1B00174DA9 /* NetDiagTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NetDiagTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF8DFFD11C61DA1B00174DA9 /* TcpPingTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TcpPingTest.m; sourceTree = "<group>"; };
 		DF8DFFD31C61DA1B00174DA9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DF8DFFDA1C61E6B200174DA9 /* QNTestLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNTestLogger.h; sourceTree = "<group>"; };
-		DF8DFFDB1C61E6B200174DA9 /* QNTestLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNTestLogger.m; sourceTree = "<group>"; };
+		DF8DFFDA1C61E6B200174DA9 /* QNNTestLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNTestLogger.h; sourceTree = "<group>"; };
+		DF8DFFDB1C61E6B200174DA9 /* QNNTestLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNTestLogger.m; sourceTree = "<group>"; };
 		DF9D41F81C57787500486F87 /* QNNTcpPing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNTcpPing.h; sourceTree = "<group>"; };
 		DF9D41F91C57787500486F87 /* QNNTcpPing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNTcpPing.m; sourceTree = "<group>"; };
 		DF9D41FB1C57789B00486F87 /* QNNUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNUtil.h; sourceTree = "<group>"; };
@@ -69,6 +74,12 @@
 		DF9D42021C5778EA00486F87 /* QNNTraceRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNTraceRoute.m; sourceTree = "<group>"; };
 		DF9D42071C57BEFD00486F87 /* QNNExternalIp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNExternalIp.h; sourceTree = "<group>"; };
 		DF9D42081C57BEFD00486F87 /* QNNExternalIp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNExternalIp.m; sourceTree = "<group>"; };
+		DFA9E1741C6B350800C17111 /* QNNHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNHttp.h; sourceTree = "<group>"; };
+		DFA9E1751C6B350800C17111 /* QNNHttp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNHttp.m; sourceTree = "<group>"; };
+		DFA9E1771C6C8FE800C17111 /* RtmpTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RtmpTest.m; sourceTree = "<group>"; };
+		DFA9E1791C6DB06D00C17111 /* NslookupTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NslookupTest.m; sourceTree = "<group>"; };
+		DFA9E17B1C6DB22C00C17111 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
+		DFA9E17D1C708A0000C17111 /* QNNHttpTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNHttpTest.m; sourceTree = "<group>"; };
 		DFCEC6451C2EC01D0058EE65 /* libNetDiag.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libNetDiag.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFCEC6481C2EC01D0058EE65 /* QNNetDiag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNNetDiag.h; sourceTree = "<group>"; };
 		E7FCF14D691EF09CEBD2808D /* Pods-NetDiagTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetDiagTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-NetDiagTests/Pods-NetDiagTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -80,6 +91,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFA9E17C1C6DB22C00C17111 /* libresolv.tbd in Frameworks */,
 				DF8DFFD41C61DA1B00174DA9 /* libNetDiag.a in Frameworks */,
 				A6296E24683C84AC5548DB39 /* libPods-NetDiagTests.a in Frameworks */,
 			);
@@ -107,6 +119,7 @@
 		7EC51E005E7B857726052BEF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DFA9E17B1C6DB22C00C17111 /* libresolv.tbd */,
 				F50835689CBA65323B9B2AA7 /* libPods-NetDiagTests.a */,
 			);
 			name = Frameworks;
@@ -117,8 +130,11 @@
 			children = (
 				DF8DFFD11C61DA1B00174DA9 /* TcpPingTest.m */,
 				DF8DFFD31C61DA1B00174DA9 /* Info.plist */,
-				DF8DFFDA1C61E6B200174DA9 /* QNTestLogger.h */,
-				DF8DFFDB1C61E6B200174DA9 /* QNTestLogger.m */,
+				DF8DFFDA1C61E6B200174DA9 /* QNNTestLogger.h */,
+				DF8DFFDB1C61E6B200174DA9 /* QNNTestLogger.m */,
+				DFA9E1771C6C8FE800C17111 /* RtmpTest.m */,
+				DFA9E1791C6DB06D00C17111 /* NslookupTest.m */,
+				DFA9E17D1C708A0000C17111 /* QNNHttpTest.m */,
 			);
 			path = NetDiagTests;
 			sourceTree = "<group>";
@@ -164,6 +180,8 @@
 				DF9D42081C57BEFD00486F87 /* QNNExternalIp.m */,
 				DF8DFFC31C60951D00174DA9 /* QNNNslookup.h */,
 				DF8DFFC41C60951D00174DA9 /* QNNNslookup.m */,
+				DFA9E1741C6B350800C17111 /* QNNHttp.h */,
+				DFA9E1751C6B350800C17111 /* QNNHttp.m */,
 			);
 			path = NetDiag;
 			sourceTree = "<group>";
@@ -307,7 +325,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DF8DFFDC1C61E6B200174DA9 /* QNTestLogger.m in Sources */,
+				DFA9E17A1C6DB06D00C17111 /* NslookupTest.m in Sources */,
+				DF8DFFDC1C61E6B200174DA9 /* QNNTestLogger.m in Sources */,
+				DFA9E17E1C708A0000C17111 /* QNNHttpTest.m in Sources */,
+				DFA9E1781C6C8FE800C17111 /* RtmpTest.m in Sources */,
 				DF8DFFD21C61DA1B00174DA9 /* TcpPingTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -324,6 +345,7 @@
 				DF9D42001C5778B600486F87 /* QNNRtmp.m in Sources */,
 				DF9D41FD1C57789B00486F87 /* QNNUtil.m in Sources */,
 				DF9D42031C5778EA00486F87 /* QNNTraceRoute.m in Sources */,
+				DFA9E1761C6B350800C17111 /* QNNHttp.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

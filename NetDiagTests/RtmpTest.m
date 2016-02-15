@@ -1,23 +1,25 @@
 //
-//  NetDiagTests.m
-//  NetDiagTests
+//  RtmpTest.m
+//  NetDiag
 //
-//  Created by bailong on 16/2/3.
+//  Created by bailong on 16/2/11.
 //  Copyright © 2016年 Qiniu Cloud Storage. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
 
-#import <AGAsyncTestHelper.h>
+#import "QNNRtmp.h"
 
-#import "QNNTcpPing.h"
 #import "QNNTestLogger.h"
 
-@interface NetDiagTests : XCTestCase
+#import <AGAsyncTestHelper.h>
+
+
+@interface RtmpTest : XCTestCase
 
 @end
 
-@implementation NetDiagTests
+@implementation RtmpTest
 
 - (void)setUp {
     [super setUp];
@@ -28,13 +30,9 @@
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
 }
-
-- (void)testFailure {
-}
-
 - (void)testTimeout{
     __block BOOL run = NO;
-    id<QNNStopDelegate> h = [QNNTcpPing start:@"up.qiniu.com" port:9999 count:2 output:[[QNNTestLogger alloc]init]  complete:^(QNNTcpPingResult * r) {
+    id<QNNStopDelegate> h = [QNNRtmpHandshake start:@"up.qiniu.com" output:[[QNNTestLogger alloc]init]  complete:^(QNNRtmpHandshakeResult * r) {
         XCTAssertNotNil(r, @"need result");
         XCTAssertEqual(ETIMEDOUT, r.code, @"timeout code");
         run = YES;
@@ -45,7 +43,7 @@
 
 -(void)testStop{
     __block BOOL run = NO;
-    id<QNNStopDelegate> h = [QNNTcpPing start:@"www.qiniu.com" output:[[QNNTestLogger alloc]init] complete:^(QNNTcpPingResult * r) {
+    id<QNNStopDelegate> h = [QNNRtmpHandshake start:@"www.qiniu.com" output:[[QNNTestLogger alloc]init] complete:^(QNNRtmpHandshakeResult * r) {
         XCTAssertNotNil(r, @"need result");
         XCTAssertEqual(kQNNRequestStoped, r.code, @"stop code");
         run = YES;
@@ -57,7 +55,7 @@
 
 - (void)testOK{
     __block BOOL run = NO;
-    id<QNNStopDelegate> h = [QNNTcpPing start:@"www.baidu.com" output:[[QNNTestLogger alloc]init] complete:^(QNNTcpPingResult * r) {
+    id<QNNStopDelegate> h = [QNNRtmpHandshake start:@"src.publish.z1.pili.qiniudns.com" output:[[QNNTestLogger alloc]init] complete:^(QNNRtmpHandshakeResult * r) {
         XCTAssertNotNil(r, @"need result");
         XCTAssertEqual(0, r.code, @"normal code");
         XCTAssert(r.maxTime>= r.avgTime, @"max time >= avg time");
