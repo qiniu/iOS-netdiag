@@ -13,7 +13,6 @@
 #import "QNNPing.h"
 #import "QNNTestLogger.h"
 
-
 @interface PingTest : XCTestCase
 
 @end
@@ -30,9 +29,9 @@
     [super tearDown];
 }
 
-- (void)testTimeout{
+- (void)testTimeout {
     __block BOOL run = NO;
-    [QNNPing start:@"1.1.1.1" output:[[QNNTestLogger alloc]init]  complete:^(QNNPingResult* r) {
+    [QNNPing start:@"1.1.1.1" output:[[QNNTestLogger alloc] init] complete:^(QNNPingResult* r) {
         XCTAssertNotNil(r, @"need result");
         run = YES;
     }];
@@ -40,9 +39,9 @@
     XCTAssert(run, @"PASS");
 }
 
--(void)testStop{
+- (void)testStop {
     __block BOOL run = NO;
-    id<QNNStopDelegate> h = [QNNPing start:@"www.qiniu.com" output:[[QNNTestLogger alloc]init] complete:^(QNNPingResult* r) {
+    id<QNNStopDelegate> h = [QNNPing start:@"www.qiniu.com" output:[[QNNTestLogger alloc] init] complete:^(QNNPingResult* r) {
         XCTAssertNotNil(r, @"need result");
         XCTAssertEqual(kQNNRequestStoped, r.code, @"stop code");
         run = YES;
@@ -52,17 +51,16 @@
     XCTAssert(run, @"PASS");
 }
 
-- (void)testOK{
+- (void)testOK {
     __block BOOL run = NO;
-    [QNNPing start:@"www.baidu.com" output:[[QNNTestLogger alloc]init] complete:^(QNNPingResult* r) {
+    [QNNPing start:@"www.baidu.com" output:[[QNNTestLogger alloc] init] complete:^(QNNPingResult* r) {
         XCTAssertNotNil(r, @"need result");
         XCTAssertEqual(0, r.code, @"normal code");
-        XCTAssert(r.maxRtt>= r.avgRtt, @"max time >= avg time");
-        XCTAssert(r.minRtt<= r.avgRtt, @"min time =< avg time");
+        XCTAssert(r.maxRtt >= r.avgRtt, @"max time >= avg time");
+        XCTAssert(r.minRtt <= r.avgRtt, @"min time =< avg time");
         run = YES;
     }];
-    
-    
+
     AGWW_WAIT_WHILE(!run, 30.0);
     XCTAssert(run, @"PASS");
 }

@@ -10,9 +10,9 @@
 
 @interface QNNExternalIp : NSObject
 
-+(NSString*) externalIp;
-+(NSString*) externalDNS;
++ (NSString*)externalIp;
++ (NSString*)externalDNS;
 
-+(NSString*)checkExternal;
++ (NSString*)checkExternal;
 
 @end

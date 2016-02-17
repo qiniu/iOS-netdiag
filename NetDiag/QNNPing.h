@@ -6,8 +6,8 @@
 //  Copyright © 2015年 Qiniu Cloud Storage. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "QNNProtocols.h"
+#import <Foundation/Foundation.h>
 
 extern const int kQNNInvalidPingResponse;
 
@@ -22,19 +22,19 @@ extern const int kQNNInvalidPingResponse;
 @property (readonly) NSTimeInterval totalTime;
 @property (readonly) NSTimeInterval stddev;
 
--(NSString*) description;
+- (NSString*)description;
 
 @end
 
-typedef void (^QNNPingCompleteHandler)(QNNPingResult*) ;
+typedef void (^QNNPingCompleteHandler)(QNNPingResult*);
 
-@interface QNNPing : NSObject<QNNStopDelegate>
+@interface QNNPing : NSObject <QNNStopDelegate>
 
-+(instancetype) start:(NSString*)host
++ (instancetype)start:(NSString*)host
                output:(id<QNNOutputDelegate>)output
              complete:(QNNPingCompleteHandler)complete;
 
-+(instancetype) start:(NSString*)host
++ (instancetype)start:(NSString*)host
                output:(id<QNNOutputDelegate>)output
              complete:(QNNPingCompleteHandler)complete
              interval:(NSInteger)interval

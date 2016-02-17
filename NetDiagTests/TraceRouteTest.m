@@ -10,8 +10,8 @@
 
 #import <AGAsyncTestHelper.h>
 
-#import "QNNTraceRoute.h"
 #import "QNNTestLogger.h"
+#import "QNNTraceRoute.h"
 
 @interface TraceRouteTest : XCTestCase
 
@@ -31,12 +31,12 @@
 
 - (void)testOK {
     __block BOOL run = NO;
-    [QNNTraceRoute start:@"www.akamai.com" output:[[QNNTestLogger alloc]init] complete:^(QNNTraceRouteResult* r) {
+    [QNNTraceRoute start:@"www.akamai.com" output:[[QNNTestLogger alloc] init] complete:^(QNNTraceRouteResult* r) {
         XCTAssertNotNil(r, @"need result");
         XCTAssertEqual(0, r.code, @"normal code");
         run = YES;
     }];
-    
+
     AGWW_WAIT_WHILE(!run, 500.0);
     XCTAssert(run, @"PASS");
 }

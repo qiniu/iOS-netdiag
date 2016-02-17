@@ -10,7 +10,7 @@
 
 @implementation QNNTestLogger
 
--(void) write:(NSString*)line{
+- (void)write:(NSString*)line {
     NSLog(@"%@", line);
 }
 

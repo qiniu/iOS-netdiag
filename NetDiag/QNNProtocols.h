@@ -6,18 +6,17 @@
 //  Copyright © 2015年 Qiniu Cloud Storage. All rights reserved.
 //
 
-
 #import <Foundation/Foundation.h>
 
 @protocol QNNStopDelegate <NSObject>
 
--(void) stop;
+- (void)stop;
 
 @end
 
 @protocol QNNOutputDelegate <NSObject>
 
--(void) write:(NSString*)line;
+- (void)write:(NSString*)line;
 
 @end
 

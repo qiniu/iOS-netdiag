@@ -6,8 +6,8 @@
 //  Copyright © 2016年 Qiniu Cloud Storage. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "QNNProtocols.h"
+#import <Foundation/Foundation.h>
 
 /**
  *    A 记录
@@ -19,7 +19,6 @@ extern const int kQNNTypeA;
  */
 extern const int kQNNTypeCname;
 
-
 @interface QNNRecord : NSObject
 @property (nonatomic, readonly) NSString *value;
 @property (readonly) int ttl;
@@ -29,21 +28,20 @@ extern const int kQNNTypeCname;
                  ttl:(int)ttl
                 type:(int)type;
 
-- (NSString*) description;
+- (NSString *)description;
 
 @end
 
+typedef void (^QNNNslookupCompleteHandler)(NSArray *);
 
-typedef void (^QNNNslookupCompleteHandler)(NSArray*);
+@interface QNNNslookup : NSObject <QNNStopDelegate>
 
-@interface QNNNslookup : NSObject<QNNStopDelegate>
-
-+(instancetype) start:(NSString*)domain
++ (instancetype)start:(NSString *)domain
                output:(id<QNNOutputDelegate>)output
              complete:(QNNNslookupCompleteHandler)complete;
 
-+(instancetype) start:(NSString*)domain
-               server:(NSString*)dnsServer
++ (instancetype)start:(NSString *)domain
+               server:(NSString *)dnsServer
                output:(id<QNNOutputDelegate>)output
              complete:(QNNNslookupCompleteHandler)complete;
 

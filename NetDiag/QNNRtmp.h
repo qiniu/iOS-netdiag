@@ -6,13 +6,12 @@
 //  Copyright © 2016年 Qiniu Cloud Storage. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "QNNProtocols.h"
+#import <Foundation/Foundation.h>
 
 extern const int kQNNRtmpServerVersionError;
 extern const int kQNNRtmpServerSignatureError;
 extern const int kQNNRtmpServerTimeError;
-
 
 @interface QNNRtmpHandshakeResult : NSObject
 
@@ -22,13 +21,13 @@ extern const int kQNNRtmpServerTimeError;
 @property (readonly) NSTimeInterval avgTime;
 @property (readonly) NSInteger count;
 
--(NSString*) description;
+- (NSString*)description;
 
 @end
 
 typedef void (^QNNRtmpHandshakeCompleteHandler)(QNNRtmpHandshakeResult*);
 
-@interface QNNRtmpHandshake : NSObject<QNNStopDelegate>
+@interface QNNRtmpHandshake : NSObject <QNNStopDelegate>
 
 /**
  *    default port is 1935
@@ -39,11 +38,11 @@ typedef void (^QNNRtmpHandshakeCompleteHandler)(QNNRtmpHandshakeResult*);
  *
  *    @return QNNTcpping instance, could be stop
  */
-+(instancetype) start:(NSString*)host
++ (instancetype)start:(NSString*)host
                output:(id<QNNOutputDelegate>)output
              complete:(QNNRtmpHandshakeCompleteHandler)complete;
 
-+(instancetype) start:(NSString*)host
++ (instancetype)start:(NSString*)host
                  port:(NSUInteger)port
                 count:(NSInteger)count
                output:(id<QNNOutputDelegate>)output

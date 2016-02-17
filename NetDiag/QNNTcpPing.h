@@ -6,8 +6,8 @@
 //  Copyright © 2016年 Qiniu Cloud Storage. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "QNNProtocols.h"
+#import <Foundation/Foundation.h>
 
 @interface QNNTcpPingResult : NSObject
 
@@ -17,13 +17,13 @@
 @property (readonly) NSTimeInterval avgTime;
 @property (readonly) NSInteger count;
 
--(NSString*) description;
+- (NSString*)description;
 
 @end
 
 typedef void (^QNNTcpPingCompleteHandler)(QNNTcpPingResult*);
 
-@interface QNNTcpPing : NSObject<QNNStopDelegate>
+@interface QNNTcpPing : NSObject <QNNStopDelegate>
 
 /**
  *    default port is 80
@@ -34,11 +34,11 @@ typedef void (^QNNTcpPingCompleteHandler)(QNNTcpPingResult*);
  *
  *    @return QNNTcpping instance, could be stop
  */
-+(instancetype) start:(NSString*)host
++ (instancetype)start:(NSString*)host
                output:(id<QNNOutputDelegate>)output
              complete:(QNNTcpPingCompleteHandler)complete;
 
-+(instancetype) start:(NSString*)host
++ (instancetype)start:(NSString*)host
                  port:(NSUInteger)port
                 count:(NSInteger)count
                output:(id<QNNOutputDelegate>)output

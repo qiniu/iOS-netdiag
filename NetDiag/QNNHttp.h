@@ -6,8 +6,8 @@
 //  Copyright © 2016年 Qiniu Cloud Storage. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "QNNProtocols.h"
+#import <Foundation/Foundation.h>
 
 @interface QNNHttpResult : NSObject
 
@@ -16,13 +16,13 @@
 @property (readonly) NSDictionary* headers;
 @property (readonly) NSData* body;
 
--(NSString*) description;
+- (NSString*)description;
 
 @end
 
 typedef void (^QNNHttpCompleteHandler)(QNNHttpResult*);
 
-@interface QNNHttp : NSObject<QNNStopDelegate>
+@interface QNNHttp : NSObject <QNNStopDelegate>
 
 /**
  *    default port is 80
@@ -33,7 +33,7 @@ typedef void (^QNNHttpCompleteHandler)(QNNHttpResult*);
  *
  *    @return QNNTcpping instance, could be stop
  */
-+(instancetype) start:(NSString*)url
++ (instancetype)start:(NSString*)url
                output:(id<QNNOutputDelegate>)output
              complete:(QNNHttpCompleteHandler)complete;
 

@@ -10,6 +10,6 @@
 
 #import "QNNProtocols.h"
 
-@interface QNNTestLogger : NSObject<QNNOutputDelegate>
+@interface QNNTestLogger : NSObject <QNNOutputDelegate>
 
 @end

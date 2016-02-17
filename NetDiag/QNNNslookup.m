@@ -6,8 +6,8 @@
 //  Copyright © 2016年 Qiniu Cloud Storage. All rights reserved.
 //
 
-#include <resolv.h>
 #include <arpa/inet.h>
+#include <resolv.h>
 #include <string.h>
 
 #import "QNNNslookup.h"
@@ -19,22 +19,22 @@ const int kQNNTypeCname = 5;
 
 - (instancetype)init:(NSString *)value
                  ttl:(int)ttl
-                type:(int)type{
+                type:(int)type {
     if (self = [super init]) {
         _ttl = ttl;
-        _value =value;
+        _value = value;
         _type = type;
     }
-    return  self;
+    return self;
 }
 
-- (NSString*) description{
-    NSString* type;
+- (NSString *)description {
+    NSString *type;
     if (_type == kQNNTypeA) {
         type = @"A";
-    }else if(_type == kQNNTypeCname){
+    } else if (_type == kQNNTypeCname) {
         type = @"CNAME";
-    }else {
+    } else {
         type = [NSString stringWithFormat:@"TYPE-%d", _type];
     }
     return [NSString stringWithFormat:@"%d IN %@ %@", _ttl, type, _value];
@@ -42,14 +42,13 @@ const int kQNNTypeCname = 5;
 
 @end
 
-
 static NSArray *query_ip(res_state res, const char *host) {
     u_char answer[1500];
     int len = res_nquery(res, host, ns_c_in, ns_t_a, answer, sizeof(answer));
-    
+
     ns_msg handle;
     ns_initparse(answer, len, &handle);
-    
+
     int count = ns_msg_count(handle, ns_s_an);
     if (count <= 0) {
         return nil;
@@ -69,19 +68,17 @@ static NSArray *query_ip(res_state res, const char *host) {
         if (t == ns_t_a) {
             const char *p = inet_ntop(AF_INET, ns_rr_rdata(rr), buf, 32);
             val = [NSString stringWithUTF8String:p];
-        }
-        else if (t == ns_t_cname) {
+        } else if (t == ns_t_cname) {
             int x = ns_name_uncompress(answer, &(answer[len]), ns_rr_rdata(rr), cnameBuf, sizeof(cnameBuf));
             if (x <= 0) {
                 continue;
             }
             val = [NSString stringWithUTF8String:cnameBuf];
             memset(cnameBuf, 0, sizeof(cnameBuf));
-        }
-        else {
+        } else {
             continue;
         }
-        
+
         QNNRecord *record = [[QNNRecord alloc] init:val ttl:ttl type:t];
         [array addObject:record];
     }
@@ -102,7 +99,7 @@ static int setup_dns_server(res_state res, const char *dns_server) {
     if (r == 0) {
         return -1;
     }
-    
+
     res->nsaddr_list[0].sin_addr = addr;
     res->nsaddr_list[0].sin_family = AF_INET;
     res->nsaddr_list[0].sin_port = htons(NS_DEFAULTPORT);
@@ -112,20 +109,20 @@ static int setup_dns_server(res_state res, const char *dns_server) {
 
 @interface QNNNslookup ()
 
-@property (readonly) NSString* domain;
+@property (readonly) NSString *domain;
 @property (readonly) id<QNNOutputDelegate> output;
 @property (readonly) QNNNslookupCompleteHandler complete;
-@property (readonly) NSString* dnsServer;
+@property (readonly) NSString *dnsServer;
 @property (atomic) BOOL stopped;
 
 @end
 
 @implementation QNNNslookup
 
--(instancetype)init:(NSString*)domain
-             server:(NSString*)dnsServer
-             output:(id<QNNOutputDelegate>)output
-           complete:(QNNNslookupCompleteHandler)complete{
+- (instancetype)init:(NSString *)domain
+              server:(NSString *)dnsServer
+              output:(id<QNNOutputDelegate>)output
+            complete:(QNNNslookupCompleteHandler)complete {
     if (self = [super init]) {
         _domain = domain;
         _dnsServer = dnsServer;
@@ -136,62 +133,61 @@ static int setup_dns_server(res_state res, const char *dns_server) {
     return self;
 }
 
--(void) run{
+- (void)run {
     if (_output != nil) {
         [_output write:[NSString stringWithFormat:@"Query: %@", _domain]];
         if (_dnsServer == nil) {
             [_output write:@"system dns server\n"];
-        }else{
+        } else {
             [_output write:[NSString stringWithFormat:@"server: %@", _dnsServer]];
         }
     }
 
     struct __res_state res;
-    
+
     int r;
     NSDate *t1 = [NSDate date];
     if (_dnsServer == nil) {
         r = setup_dns_server(&res, NULL);
-    }
-    else {
+    } else {
         r = setup_dns_server(&res, [_dnsServer cStringUsingEncoding:NSASCIIStringEncoding]);
     }
     if (r != 0) {
         return;
     }
-    
-    NSArray* records = query_ip(&res, [_domain cStringUsingEncoding:NSUTF8StringEncoding]);
+
+    NSArray *records = query_ip(&res, [_domain cStringUsingEncoding:NSUTF8StringEncoding]);
     NSTimeInterval duration = [[NSDate date] timeIntervalSinceDate:t1];
     if (_output) {
-        [_output write:[NSString stringWithFormat:@"Query time: %f msec\n", duration*1000]];
-        for (QNNRecord* r in records) {
+        [_output write:[NSString stringWithFormat:@"Query time: %f msec\n", duration * 1000]];
+        for (QNNRecord *r in records) {
             [_output write:[NSString stringWithFormat:@"%@\n", r]];
         }
     }
-    
+
     if (_complete) {
         _complete(records);
     }
 }
 
-+(instancetype) start:(NSString*)domain
++ (instancetype)start:(NSString *)domain
                output:(id<QNNOutputDelegate>)output
-             complete:(QNNNslookupCompleteHandler)complete{
+             complete:(QNNNslookupCompleteHandler)complete {
     return [QNNNslookup start:domain server:nil output:output complete:complete];
 }
 
-+(instancetype) start:(NSString*)domain
-               server:(NSString*)dnsServer
++ (instancetype)start:(NSString *)domain
+               server:(NSString *)dnsServer
                output:(id<QNNOutputDelegate>)output
-             complete:(QNNNslookupCompleteHandler)complete{
-    QNNNslookup *instance = [[QNNNslookup alloc]init:domain server:dnsServer output:output complete:complete];
+             complete:(QNNNslookupCompleteHandler)complete {
+    QNNNslookup *instance = [[QNNNslookup alloc] init:domain server:dnsServer output:output complete:complete];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
         [instance run];
     });
     return instance;
 }
 
--(void)stop{
+- (void)stop {
     _stopped = YES;
 }
 
