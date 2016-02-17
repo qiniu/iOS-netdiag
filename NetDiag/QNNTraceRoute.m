@@ -40,7 +40,7 @@
 
 -(NSString*)description{
     NSMutableString *ttlRecord = [[NSMutableString alloc] initWithCapacity:20];
-    [ttlRecord appendFormat:@"%d\t", _hop];
+    [ttlRecord appendFormat:@"%ld\t", (long)_hop];
     if (_ip == nil) {
         [ttlRecord appendFormat:@" \t"];
     }else{
@@ -115,7 +115,7 @@ static const int TraceMaxAttempts = 3;
     QNNTraceRouteRecord* record = [[QNNTraceRouteRecord alloc]init:ttl count:TraceMaxAttempts];
     for (int try = 0; try < TraceMaxAttempts; try ++) {
         NSDate* startTime = [NSDate date];
-        int sent = sendto(sendSock, cmsg, sizeof(cmsg), 0, (struct sockaddr *)addr, sizeof(struct sockaddr));
+        ssize_t sent = sendto(sendSock, cmsg, sizeof(cmsg), 0, (struct sockaddr *)addr, sizeof(struct sockaddr));
         if (sent != sizeof(cmsg)) {
             err = errno;
             NSLog(@"error %s", strerror(err));
@@ -131,7 +131,7 @@ static const int TraceMaxAttempts = 3;
         FD_SET(icmpSock, &readfds);
         select(icmpSock + 1, &readfds, NULL, NULL, &tv);
         if (FD_ISSET(icmpSock, &readfds) > 0) {
-            int res = recvfrom(icmpSock, buff, sizeof(buff), 0, (struct sockaddr *)&storageAddr, &n);
+            ssize_t res = recvfrom(icmpSock, buff, sizeof(buff), 0, (struct sockaddr *)&storageAddr, &n);
             if (res  < 0) {
                 err = errno;
                 [self.output write:[NSString stringWithFormat:@"recv error %s\n", strerror(err)]];

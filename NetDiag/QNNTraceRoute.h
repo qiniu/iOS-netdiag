@@ -15,8 +15,6 @@
 
 @property (readonly) NSInteger code;
 
--(NSString*) description;
-
 @end
 
 typedef void (^QNNTraceRouteCompleteHandler)(QNNTraceRouteResult*) ;

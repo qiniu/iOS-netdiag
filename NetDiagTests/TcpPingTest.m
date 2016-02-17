@@ -34,7 +34,7 @@
 
 - (void)testTimeout{
     __block BOOL run = NO;
-    id<QNNStopDelegate> h = [QNNTcpPing start:@"up.qiniu.com" port:9999 count:2 output:[[QNNTestLogger alloc]init]  complete:^(QNNTcpPingResult * r) {
+    [QNNTcpPing start:@"up.qiniu.com" port:9999 count:2 output:[[QNNTestLogger alloc]init]  complete:^(QNNTcpPingResult * r) {
         XCTAssertNotNil(r, @"need result");
         XCTAssertEqual(ETIMEDOUT, r.code, @"timeout code");
         run = YES;
@@ -57,7 +57,7 @@
 
 - (void)testOK{
     __block BOOL run = NO;
-    id<QNNStopDelegate> h = [QNNTcpPing start:@"www.baidu.com" output:[[QNNTestLogger alloc]init] complete:^(QNNTcpPingResult * r) {
+    [QNNTcpPing start:@"www.baidu.com" output:[[QNNTestLogger alloc]init] complete:^(QNNTcpPingResult * r) {
         XCTAssertNotNil(r, @"need result");
         XCTAssertEqual(0, r.code, @"normal code");
         XCTAssert(r.maxTime>= r.avgTime, @"max time >= avg time");

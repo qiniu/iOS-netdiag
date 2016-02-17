@@ -32,7 +32,7 @@
 }
 - (void)testTimeout{
     __block BOOL run = NO;
-    id<QNNStopDelegate> h = [QNNRtmpHandshake start:@"up.qiniu.com" output:[[QNNTestLogger alloc]init]  complete:^(QNNRtmpHandshakeResult * r) {
+    [QNNRtmpHandshake start:@"up.qiniu.com" output:[[QNNTestLogger alloc]init]  complete:^(QNNRtmpHandshakeResult * r) {
         XCTAssertNotNil(r, @"need result");
         XCTAssertEqual(ETIMEDOUT, r.code, @"timeout code");
         run = YES;
@@ -55,7 +55,7 @@
 
 - (void)testOK{
     __block BOOL run = NO;
-    id<QNNStopDelegate> h = [QNNRtmpHandshake start:@"src.publish.z1.pili.qiniudns.com" output:[[QNNTestLogger alloc]init] complete:^(QNNRtmpHandshakeResult * r) {
+    [QNNRtmpHandshake start:@"src.publish.z1.pili.qiniudns.com" output:[[QNNTestLogger alloc]init] complete:^(QNNRtmpHandshakeResult * r) {
         XCTAssertNotNil(r, @"need result");
         XCTAssertEqual(0, r.code, @"normal code");
         XCTAssert(r.maxTime>= r.avgTime, @"max time >= avg time");

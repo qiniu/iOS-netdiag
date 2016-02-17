@@ -18,7 +18,7 @@
             bodySummary = @"not utf8 string body";
         }
     }
-    return [NSString stringWithFormat:@"code:%d duration:%f body:%@", _code, _duration, bodySummary];
+    return [NSString stringWithFormat:@"code:%ld duration:%f body:%@", (long)_code, _duration, bodySummary];
 }
 
 -(instancetype)init:(NSInteger)code
@@ -75,7 +75,7 @@
             [_output write:[httpError description]];
             
         }
-        [_output write:[NSString stringWithFormat:@"complete duration:%f status %d\n", duration, response.statusCode]];
+        [_output write:[NSString stringWithFormat:@"complete duration:%f status %ld\n", duration, (long)response.statusCode]];
         if (response != nil&& response.allHeaderFields != nil) {
             [response.allHeaderFields enumerateKeysAndObjectsUsingBlock: ^(NSString *key, NSString *obj, BOOL *stop) {
                 [_output write:[NSString stringWithFormat:@"%@: %@\n", key, obj]];

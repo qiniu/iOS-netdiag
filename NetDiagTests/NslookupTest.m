@@ -31,7 +31,7 @@
 
 - (void)testOK {
     __block BOOL run = NO;
-    id<QNNStopDelegate> h = [QNNNslookup start:@"www.baidu.com" output:[[QNNTestLogger alloc]init] complete:^(NSArray * records) {
+    [QNNNslookup start:@"www.baidu.com" output:[[QNNTestLogger alloc]init] complete:^(NSArray * records) {
         XCTAssertNotNil(records, @"need result");
         XCTAssert(records.count>= 2, @"max record >= 2");
         run = YES;

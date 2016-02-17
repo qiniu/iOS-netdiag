@@ -36,7 +36,7 @@
     NSString* data = [QNNExternalIp checkExternal];
     XCTAssertNotNil(data, @"null return");
     XCTAssertNotEqualObjects(data, @"", @"empty data");
-    NSLog(data);
+    NSLog(@"%@", data);
 }
 
 @end

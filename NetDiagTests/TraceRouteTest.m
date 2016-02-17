@@ -31,7 +31,7 @@
 
 - (void)testOK {
     __block BOOL run = NO;
-    id<QNNStopDelegate> h = [QNNTraceRoute start:@"www.akamai.com" output:[[QNNTestLogger alloc]init] complete:^(QNNTraceRouteResult* r) {
+    [QNNTraceRoute start:@"www.akamai.com" output:[[QNNTestLogger alloc]init] complete:^(QNNTraceRouteResult* r) {
         XCTAssertNotNil(r, @"need result");
         XCTAssertEqual(0, r.code, @"normal code");
         run = YES;

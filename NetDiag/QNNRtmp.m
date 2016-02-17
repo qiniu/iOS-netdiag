@@ -37,7 +37,7 @@ struct sock_ret{
 //}
 
 static struct sock_ret readIntoBuffer(int sock, char* buf, int buf_size){
-    int n = 0;
+    ssize_t n = 0;
     int sockerr = 0;
     while (1){
         n = recv(sock, buf, buf_size, 0);
@@ -51,7 +51,7 @@ static struct sock_ret readIntoBuffer(int sock, char* buf, int buf_size){
     }
     
     struct sock_ret ret;
-    ret.count = n;
+    ret.count = (int)n;
     ret.error_code = sockerr;
     return ret;
 }
@@ -78,7 +78,7 @@ static struct sock_ret writeAll(int sock, const char *buffer, int n){
     ret.count = 0;
     ret.error_code = 0;
     while (n > 0){
-        int nBytes = send(sock, buffer, n, 0);
+        ssize_t nBytes = send(sock, buffer, n, 0);
         if (nBytes < 0)
         {
             int sockerr = errno;
@@ -97,7 +97,7 @@ static struct sock_ret writeAll(int sock, const char *buffer, int n){
         n -= nBytes;
         ptr += nBytes;
     }
-    ret.count = ptr -buffer;
+    ret.count = (int)(ptr -buffer);
     
     return ret;
 }
@@ -165,7 +165,7 @@ static int verify_s2(int sock, char* server_sig, char* client_sig){
     if (_code == 0) {
         return [NSString stringWithFormat:@"tcp connect min/avg/max = %f/%f/%fms", _minTime, _avgTime, _maxTime];
     }
-    return [NSString stringWithFormat:@"tcp connect failed %d", _code];
+    return [NSString stringWithFormat:@"tcp connect failed %ld", (long)_code];
 }
 
 -(instancetype)init:(NSInteger)code
@@ -216,7 +216,7 @@ static int verify_s2(int sock, char* server_sig, char* client_sig){
 }
 
 -(void) run{
-    [self.output write:[NSString stringWithFormat:@"connect to host %@:%d ...\n", _host, _port]];
+    [self.output write:[NSString stringWithFormat:@"connect to host %@:%lu ...\n", _host, (unsigned long)_port]];
     struct sockaddr_in addr;
     memset(&addr, 0, sizeof(addr));
     addr.sin_len = sizeof(addr);
@@ -235,12 +235,12 @@ static int verify_s2(int sock, char* server_sig, char* client_sig){
             return;
         }
         addr.sin_addr = *(struct in_addr *)host->h_addr;
-        [self.output write:[NSString stringWithFormat:@"connect to ip %s:%d ...\n", inet_ntoa(addr.sin_addr), _port]];
+        [self.output write:[NSString stringWithFormat:@"connect to ip %s:%lu ...\n", inet_ntoa(addr.sin_addr), (unsigned long)_port]];
     }
     
     NSTimeInterval* intervals = (NSTimeInterval*)malloc(sizeof(NSTimeInterval)*_count);
     NSInteger index = 0;
-    int r = 0;
+    NSInteger r = 0;
     do {
         NSDate* t1 = [NSDate date];
         
@@ -249,9 +249,9 @@ static int verify_s2(int sock, char* server_sig, char* client_sig){
         NSTimeInterval duration = [[NSDate date] timeIntervalSinceDate:t1];
         intervals[_index] = duration;
         if (r == 0) {
-            [self.output write:[NSString stringWithFormat:@"rtmp handshake to %s:%d, %f ms\n", inet_ntoa(addr.sin_addr), _port, duration*1000]];
+            [self.output write:[NSString stringWithFormat:@"rtmp handshake to %s:%lu, %f ms\n", inet_ntoa(addr.sin_addr), (unsigned long)_port, duration*1000]];
         }else{
-            [self.output write:[NSString stringWithFormat:@"rtmp handshake failed to %s:%d, %f ms, error %d\n", inet_ntoa(addr.sin_addr), _port, duration*1000, r]];
+            [self.output write:[NSString stringWithFormat:@"rtmp handshake failed to %s:%lu, %f ms, error %ld\n", inet_ntoa(addr.sin_addr), (unsigned long)_port, duration*1000, (long)r]];
         }
         
         if (index < _count && !_stopped && r == 0) {
@@ -274,7 +274,7 @@ static int verify_s2(int sock, char* server_sig, char* client_sig){
 -(QNNRtmpHandshakeResult*)buildResult:(NSInteger)code
                             durations:(NSTimeInterval*)durations
                                 count:(NSInteger)count{
-    if (code < 0) {
+    if (code != 0 && code != kQNNRequestStoped) {
         return [[QNNRtmpHandshakeResult alloc] init:code max:0 min:0 avg:0 count:1];
     }
     NSTimeInterval max = 0;
@@ -293,7 +293,7 @@ static int verify_s2(int sock, char* server_sig, char* client_sig){
     return [[QNNRtmpHandshakeResult alloc]init:code max:max min:min avg:avg count:count];
 }
 
--(NSInteger) handShakeSocket:(int)sock{
+-(int) handShakeSocket:(int)sock{
     char client_buf[RTMP_SIG_SIZE + 1], *client_sig = client_buf + 1;
     char server_buf[RTMP_SIG_SIZE + 1], *server_sig = server_buf + 1;
     char* c0_c1 = init_c0_c1(client_buf);
@@ -342,7 +342,7 @@ static int verify_s2(int sock, char* server_sig, char* client_sig){
         return err;
     }
     NSTimeInterval duration = [[NSDate date] timeIntervalSinceDate:start];
-    [self.output write:[NSString stringWithFormat:@"rtmp connect to %s:%d, %f ms\n", inet_ntoa(addr->sin_addr), _port, duration*1000]];
+    [self.output write:[NSString stringWithFormat:@"rtmp connect to %s:%lu, %f ms\n", inet_ntoa(addr->sin_addr), (unsigned long)_port, duration*1000]];
     return [self handShakeSocket:sock];
     
 }

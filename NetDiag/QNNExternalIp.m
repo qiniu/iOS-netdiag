@@ -49,10 +49,10 @@
         NSLog(@"fetch http error %@", httpError);
         return nil;
     }
-    NSLog(@"fetch http code %d", response.statusCode);
+    NSLog(@"fetch http code %ld", (long)response.statusCode);
     NSString* s = [[NSString alloc]initWithData:d encoding:NSUTF8StringEncoding];
     if (s == nil || [s isEqualToString:@""]) {
-        NSLog(@"fetch http code %d", response.statusCode);
+        NSLog(@"fetch http code %ld", (long)response.statusCode);
         return nil;
     }
     NSRange range = [s rangeOfString:@"<iframe src=\""];
@@ -102,7 +102,7 @@
     if (httpError != nil || d == nil) {
         return @"check server error";
     }
-    NSLog(@"http code %d", response.statusCode);
+    NSLog(@"http code %ld", (long)response.statusCode);
     NSString* s = [[NSString alloc]initWithData:d encoding:NSUTF8StringEncoding];
     if (s == nil || [s isEqualToString:@""]) {
         return @"invalid encoding";

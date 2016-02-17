@@ -34,7 +34,7 @@
     if (_code == 0 || _code == kQNNRequestStoped) {
         return [NSString stringWithFormat:@"tcp connect min/avg/max = %.3f/%.3f/%.3fms", _minTime, _avgTime, _maxTime];
     }
-    return [NSString stringWithFormat:@"tcp connect failed %d", _code];
+    return [NSString stringWithFormat:@"tcp connect failed %ld", (long)_code];
 }
 
 -(instancetype)init:(NSInteger)code
@@ -84,7 +84,7 @@
 }
 
 -(void) run{
-    [self.output write:[NSString stringWithFormat:@"connect to host %@:%d ...\n", _host, _port]];
+    [self.output write:[NSString stringWithFormat:@"connect to host %@:%lu ...\n", _host, (unsigned long)_port]];
     struct sockaddr_in addr;
     memset(&addr, 0, sizeof(addr));
     addr.sin_len = sizeof(addr);
@@ -103,11 +103,11 @@
             return;
         }
         addr.sin_addr = *(struct in_addr *)host->h_addr;
-        [self.output write:[NSString stringWithFormat:@"connect to ip %s:%d ...\n", inet_ntoa(addr.sin_addr), _port]];
+        [self.output write:[NSString stringWithFormat:@"connect to ip %s:%lu ...\n", inet_ntoa(addr.sin_addr), (unsigned long)_port]];
     }
     
     NSTimeInterval* intervals = (NSTimeInterval*)malloc(sizeof(NSTimeInterval)*_count);
-    NSInteger index = 0;
+    int index = 0;
     int r = 0;
     do {
         NSDate* t1 = [NSDate date];
@@ -115,9 +115,9 @@
         NSTimeInterval duration = [[NSDate date] timeIntervalSinceDate:t1];
         intervals[index] = duration*1000;
         if (r == 0) {
-            [self.output write:[NSString stringWithFormat:@"connected to %s:%d, %f ms\n", inet_ntoa(addr.sin_addr), _port, duration*1000]];
+            [self.output write:[NSString stringWithFormat:@"connected to %s:%lu, %f ms\n", inet_ntoa(addr.sin_addr), (unsigned long)_port, duration*1000]];
         }else{
-            [self.output write:[NSString stringWithFormat:@"connect failed to %s:%d, %f ms, error %d\n", inet_ntoa(addr.sin_addr), _port, duration*1000, r]];
+            [self.output write:[NSString stringWithFormat:@"connect failed to %s:%lu, %f ms, error %d\n", inet_ntoa(addr.sin_addr), (unsigned long)_port, duration*1000, r]];
         }
         
         if (index < _count && !_stopped && r == 0) {
@@ -156,10 +156,10 @@
         sum += durations[i];
     }
     NSTimeInterval avg = sum/count;
-    return [[QNNTcpPingResult alloc]init:0 max:max min:min avg:avg count:count];
+    return [[QNNTcpPingResult alloc]init:code max:max min:min avg:avg count:count];
 }
 
--(NSInteger) connect:(struct sockaddr_in*) addr{
+-(int) connect:(struct sockaddr_in*) addr{
     int sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (sock == -1) {
         return errno;

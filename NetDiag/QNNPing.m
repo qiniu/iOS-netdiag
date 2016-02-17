@@ -38,9 +38,9 @@ const int kQNNInvalidPingResponse = -22001;
 
 -(NSString*) description{
     if (_code == 0 || _code == kQNNRequestStoped) {
-        return [NSString stringWithFormat:@"%d packets transmitted, %d packets received, %f packet loss time %fms\n round-trip min/avg/max/stddev = %.3f/%.3f/%.3f/%.3f ms", _count+_loss, _count, (double)_loss*100/(_count+_loss), _totalTime, _minRtt, _avgRtt, _maxRtt, _stddev];
+        return [NSString stringWithFormat:@"%d packets transmitted, %ld packets received, %f packet loss time %fms\n round-trip min/avg/max/stddev = %.3f/%.3f/%.3f/%.3f ms", (int)(_count+_loss), (long)_count, (double)_loss*100/(_count+_loss), _totalTime, _minRtt, _avgRtt, _maxRtt, _stddev];
     }
-    return [NSString stringWithFormat:@"ping failed %d", _code];
+    return [NSString stringWithFormat:@"ping failed %ld", (long)_code];
 }
 
 -(instancetype)init:(NSInteger)code
@@ -222,24 +222,24 @@ static BOOL isValidResponse(char* buffer, int len, int seq, int identifier){
 
 @implementation QNNPing
 
--(NSInteger)sendPacket:(ICMPPacket*)packet
+-(int)sendPacket:(ICMPPacket*)packet
                   sock:(int)sock
                 target:(struct sockaddr_in *)addr{
-    int sent = sendto(sock, packet, (size_t)kQNNPacketSize, 0, (struct sockaddr*)addr, (socklen_t)sizeof(struct sockaddr));
+    ssize_t sent = sendto(sock, packet, (size_t)kQNNPacketSize, 0, (struct sockaddr*)addr, (socklen_t)sizeof(struct sockaddr));
     if (sent < 0) {
         return errno;
     }
     return 0;
 }
 
--(NSInteger)ping:(struct sockaddr_in*)addr
+-(int)ping:(struct sockaddr_in*)addr
              seq:(uint16_t)seq
       identifier:(uint16_t)identifier
             sock:(int)sock
              ttl:(int*)ttlOut
             size:(int*)size{
     ICMPPacket* packet = build_packet(seq, identifier);
-    NSInteger err = 0;
+    int err = 0;
     err = [self sendPacket:packet sock:sock target:addr];
     free(packet);
     if (err != 0) {
@@ -250,16 +250,16 @@ static BOOL isValidResponse(char* buffer, int len, int seq, int identifier){
     socklen_t addrLen = sizeof(ret_addr);;
     void *buffer = malloc(kQNNPacketBufferSize);
     
-    int bytesRead = recvfrom(sock, buffer, kQNNPacketBufferSize, 0,
+    ssize_t bytesRead = recvfrom(sock, buffer, kQNNPacketBufferSize, 0,
                          (struct sockaddr *)&ret_addr, &addrLen);
     if (bytesRead < 0) {
         err = errno;
     }else if(bytesRead == 0){
         err = EPIPE;
     }else{
-        if (isValidResponse(buffer, bytesRead, seq, identifier)) {
+        if (isValidResponse(buffer, (int)bytesRead, seq, identifier)) {
             *ttlOut = ((IPHeader*)buffer)->timeToLive;
-            *size = bytesRead;
+            *size = (int)bytesRead;
         }else {
             err = kQNNInvalidPingResponse;
         }
@@ -294,7 +294,7 @@ static BOOL isValidResponse(char* buffer, int len, int seq, int identifier){
     NSTimeInterval avg = sum/count;
     NSTimeInterval avg2 = sum2/count;
     NSTimeInterval stddev = sqrt(avg2 - avg*avg);
-    return [[QNNPingResult alloc]init:0 max:max min:min avg:avg loss:loss count:count totalTime:time stddev:stddev];
+    return [[QNNPingResult alloc]init:code max:max min:min avg:avg loss:loss count:count totalTime:time stddev:stddev];
 }
 
 -(void)run{
@@ -322,7 +322,7 @@ static BOOL isValidResponse(char* buffer, int len, int seq, int identifier){
     }
     
     NSTimeInterval* durations = (NSTimeInterval*)calloc(sizeof(NSTimeInterval)*_count, 1);
-    NSInteger index = 0;
+    int index = 0;
     int r = 0;
     uint16_t identifier = (uint16_t)arc4random();
     int ttl = 0;
@@ -339,10 +339,10 @@ static BOOL isValidResponse(char* buffer, int len, int seq, int identifier){
         NSTimeInterval duration = [[NSDate date] timeIntervalSinceDate:t1];
         if (r == 0) {
             // ignore broadcast address
-            [self.output write:[NSString stringWithFormat:@"%d bytes from %s: icmp_seq=%d ttl=%d time=%f ms\n", size, inet_ntoa(addr.sin_addr), index, ttl, duration*1000]];
+            [self.output write:[NSString stringWithFormat:@"%d bytes from %s: icmp_seq=%ld ttl=%d time=%f ms\n", size, inet_ntoa(addr.sin_addr), (long)index, ttl, duration*1000]];
             durations[index - loss] = duration*1000;
         }else{
-            [self.output write:[NSString stringWithFormat:@"Request timeout for icmp_seq %d\n", index]];
+            [self.output write:[NSString stringWithFormat:@"Request timeout for icmp_seq %ld\n", (long)index]];
             loss++;
         }
         

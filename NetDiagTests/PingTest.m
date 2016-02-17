@@ -32,7 +32,7 @@
 
 - (void)testTimeout{
     __block BOOL run = NO;
-    id<QNNStopDelegate> h =  [QNNPing start:@"1.1.1.1" output:[[QNNTestLogger alloc]init]  complete:^(QNNPingResult* r) {
+    [QNNPing start:@"1.1.1.1" output:[[QNNTestLogger alloc]init]  complete:^(QNNPingResult* r) {
         XCTAssertNotNil(r, @"need result");
         run = YES;
     }];
@@ -54,7 +54,7 @@
 
 - (void)testOK{
     __block BOOL run = NO;
-    id<QNNStopDelegate> h = [QNNPing start:@"www.baidu.com" output:[[QNNTestLogger alloc]init] complete:^(QNNPingResult* r) {
+    [QNNPing start:@"www.baidu.com" output:[[QNNTestLogger alloc]init] complete:^(QNNPingResult* r) {
         XCTAssertNotNil(r, @"need result");
         XCTAssertEqual(0, r.code, @"normal code");
         XCTAssert(r.maxRtt>= r.avgRtt, @"max time >= avg time");

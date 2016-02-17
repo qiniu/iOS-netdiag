@@ -11,7 +11,7 @@
 @implementation QNNTestLogger
 
 -(void) write:(NSString*)line{
-    NSLog(line);
+    NSLog(@"%@", line);
 }
 
 @end
