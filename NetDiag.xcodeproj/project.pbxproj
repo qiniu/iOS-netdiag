@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		A6296E24683C84AC5548DB39 /* libPods-NetDiagTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F50835689CBA65323B9B2AA7 /* libPods-NetDiagTests.a */; };
 		DF2B76EC1C33702D00643678 /* QNNPing.m in Sources */ = {isa = PBXBuildFile; fileRef = DF2B76EB1C33702D00643678 /* QNNPing.m */; };
+		DF47525E1C740F0100EEAF4B /* PingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47525D1C740F0100EEAF4B /* PingTest.m */; };
+		DF4752601C743A8600EEAF4B /* ExternalIpTest.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47525F1C743A8600EEAF4B /* ExternalIpTest.m */; };
+		DF4752621C747D4A00EEAF4B /* TraceRouteTest.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4752611C747D4A00EEAF4B /* TraceRouteTest.m */; };
 		DF8DFFC51C60951D00174DA9 /* QNNNslookup.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8DFFC41C60951D00174DA9 /* QNNNslookup.m */; };
 		DF8DFFD21C61DA1B00174DA9 /* TcpPingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = DF8DFFD11C61DA1B00174DA9 /* TcpPingTest.m */; };
 		DF8DFFD41C61DA1B00174DA9 /* libNetDiag.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFCEC6451C2EC01D0058EE65 /* libNetDiag.a */; };
@@ -54,6 +57,9 @@
 		DF2B76EA1C33702D00643678 /* QNNPing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNPing.h; sourceTree = "<group>"; };
 		DF2B76EB1C33702D00643678 /* QNNPing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNPing.m; sourceTree = "<group>"; };
 		DF2B76ED1C33706900643678 /* QNNProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNProtocols.h; sourceTree = "<group>"; };
+		DF47525D1C740F0100EEAF4B /* PingTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PingTest.m; sourceTree = "<group>"; };
+		DF47525F1C743A8600EEAF4B /* ExternalIpTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExternalIpTest.m; sourceTree = "<group>"; };
+		DF4752611C747D4A00EEAF4B /* TraceRouteTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TraceRouteTest.m; sourceTree = "<group>"; };
 		DF8DFFC31C60951D00174DA9 /* QNNNslookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNNslookup.h; sourceTree = "<group>"; };
 		DF8DFFC41C60951D00174DA9 /* QNNNslookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNNslookup.m; sourceTree = "<group>"; };
 		DF8DFFCF1C61DA1B00174DA9 /* NetDiagTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NetDiagTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,6 +138,9 @@
 				DFA9E1771C6C8FE800C17111 /* RtmpTest.m */,
 				DFA9E1791C6DB06D00C17111 /* NslookupTest.m */,
 				DFA9E17D1C708A0000C17111 /* QNNHttpTest.m */,
+				DF47525D1C740F0100EEAF4B /* PingTest.m */,
+				DF47525F1C743A8600EEAF4B /* ExternalIpTest.m */,
+				DF4752611C747D4A00EEAF4B /* TraceRouteTest.m */,
 			);
 			path = NetDiagTests;
 			sourceTree = "<group>";
@@ -321,8 +330,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				DFA9E17A1C6DB06D00C17111 /* NslookupTest.m in Sources */,
+				DF4752621C747D4A00EEAF4B /* TraceRouteTest.m in Sources */,
 				DF8DFFDC1C61E6B200174DA9 /* QNNTestLogger.m in Sources */,
 				DFA9E17E1C708A0000C17111 /* QNNHttpTest.m in Sources */,
+				DF4752601C743A8600EEAF4B /* ExternalIpTest.m in Sources */,
+				DF47525E1C740F0100EEAF4B /* PingTest.m in Sources */,
 				DFA9E1781C6C8FE800C17111 /* RtmpTest.m in Sources */,
 				DF8DFFD21C61DA1B00174DA9 /* TcpPingTest.m in Sources */,
 			);

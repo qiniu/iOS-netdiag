@@ -9,15 +9,18 @@
 #import <Foundation/Foundation.h>
 #import "QNNProtocols.h"
 
+extern const int kQNNInvalidPingResponse;
+
 @interface QNNPingResult : NSObject
 
 @property (readonly) NSInteger code;
 @property (readonly) NSTimeInterval maxRtt;
 @property (readonly) NSTimeInterval minRtt;
 @property (readonly) NSTimeInterval avgRtt;
-@property (readonly) double lossRate;
+@property (readonly) NSInteger loss;
 @property (readonly) NSInteger count;
-@property (readonly) NSInteger interval;
+@property (readonly) NSTimeInterval totalTime;
+@property (readonly) NSTimeInterval stddev;
 
 -(NSString*) description;
 

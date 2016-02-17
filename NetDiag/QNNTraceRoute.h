@@ -8,6 +8,28 @@
 
 #import <Foundation/Foundation.h>
 
-@interface QNNTraceRoute : NSObject
+#import <Foundation/Foundation.h>
+#import "QNNProtocols.h"
+
+@interface QNNTraceRouteResult : NSObject
+
+@property (readonly) NSInteger code;
+
+-(NSString*) description;
+
+@end
+
+typedef void (^QNNTraceRouteCompleteHandler)(QNNTraceRouteResult*) ;
+
+@interface QNNTraceRoute : NSObject<QNNStopDelegate>
+
++(instancetype) start:(NSString*)host
+               output:(id<QNNOutputDelegate>)output
+             complete:(QNNTraceRouteCompleteHandler)complete;
+
++(instancetype) start:(NSString*)host
+               output:(id<QNNOutputDelegate>)output
+             complete:(QNNTraceRouteCompleteHandler)complete
+                maxTtl:(NSInteger)maxTtl;
 
 @end

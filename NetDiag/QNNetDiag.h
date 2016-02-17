@@ -8,6 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NetDiag : NSObject
+#import "QNNProtocols.h"
+#import "QNNUtil.h"
 
-@end
+#import "QNNPing.h"
+#import "QNNTcpPing.h"
+#import "QNNTraceRoute.h"
+#import "QNNNslookup.h"
+
+#import "QNNRtmp.h"
+#import "QNNHttp.h"
+
+#import "QNNExternalIp.h"

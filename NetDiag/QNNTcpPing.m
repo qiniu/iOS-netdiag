@@ -31,8 +31,8 @@
 
 
 -(NSString*) description{
-    if (_code == 0) {
-        return [NSString stringWithFormat:@"tcp connect min/avg/max = %f/%f/%fms", _minTime, _avgTime, _maxTime];
+    if (_code == 0 || _code == kQNNRequestStoped) {
+        return [NSString stringWithFormat:@"tcp connect min/avg/max = %.3f/%.3f/%.3fms", _minTime, _avgTime, _maxTime];
     }
     return [NSString stringWithFormat:@"tcp connect failed %d", _code];
 }
@@ -113,7 +113,7 @@
         NSDate* t1 = [NSDate date];
         r = [self connect:&addr];
         NSTimeInterval duration = [[NSDate date] timeIntervalSinceDate:t1];
-        intervals[index] = duration;
+        intervals[index] = duration*1000;
         if (r == 0) {
             [self.output write:[NSString stringWithFormat:@"connected to %s:%d, %f ms\n", inet_ntoa(addr.sin_addr), _port, duration*1000]];
         }else{
@@ -140,7 +140,7 @@
 -(QNNTcpPingResult*)buildResult:(NSInteger)code
                       durations:(NSTimeInterval*)durations
                           count:(NSInteger)count{
-    if (code < 0) {
+    if (code != 0 && code != kQNNRequestStoped) {
         return [[QNNTcpPingResult alloc] init:code max:0 min:0 avg:0 count:1];
     }
     NSTimeInterval max = 0;
