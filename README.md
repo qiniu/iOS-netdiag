@@ -1,4 +1,4 @@
-# Network Diagnosis for Objective-C
+# Network Diagnosis for iOS
 
 [![@qiniu on weibo](http://img.shields.io/badge/weibo-%40qiniutek-blue.svg)](http://weibo.com/qiniutek)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE.md)
