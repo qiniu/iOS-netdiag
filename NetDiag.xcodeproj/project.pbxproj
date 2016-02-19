@@ -24,7 +24,6 @@
 		DFA9E1761C6B350800C17111 /* QNNHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA9E1751C6B350800C17111 /* QNNHttp.m */; };
 		DFA9E1781C6C8FE800C17111 /* RtmpTest.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA9E1771C6C8FE800C17111 /* RtmpTest.m */; };
 		DFA9E17A1C6DB06D00C17111 /* NslookupTest.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA9E1791C6DB06D00C17111 /* NslookupTest.m */; };
-		DFA9E17C1C6DB22C00C17111 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DFA9E17B1C6DB22C00C17111 /* libresolv.tbd */; };
 		DFA9E17E1C708A0000C17111 /* QNNHttpTest.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA9E17D1C708A0000C17111 /* QNNHttpTest.m */; };
 		DFCEC6491C2EC01D0058EE65 /* QNNetDiag.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DFCEC6481C2EC01D0058EE65 /* QNNetDiag.h */; };
 /* End PBXBuildFile section */
@@ -94,7 +93,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DFA9E17C1C6DB22C00C17111 /* libresolv.tbd in Frameworks */,
 				DF8DFFD41C61DA1B00174DA9 /* libNetDiag.a in Frameworks */,
 				A6296E24683C84AC5548DB39 /* libPods-NetDiagTests.a in Frameworks */,
 			);
@@ -372,6 +370,10 @@
 			buildSettings = {
 				INFOPLIST_FILE = NetDiagTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-lresolv",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.qiniu.NetDiagTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -383,6 +385,10 @@
 			buildSettings = {
 				INFOPLIST_FILE = NetDiagTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-lresolv",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.qiniu.NetDiagTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
