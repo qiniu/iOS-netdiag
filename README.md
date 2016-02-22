@@ -6,60 +6,63 @@
 [![Latest Stable Version](http://img.shields.io/cocoapods/v/QNNetDiag.svg)](https://github.com/qiniu/iOS-netdiag/releases)
 ![Platform](http://img.shields.io/cocoapods/p/QNNetDiag.svg)
 
-## 用途
+## Summary
 
-网络诊断SDK，支持Ping/TcpPing/Rtmp/TraceRoute/DNS/外部IP/外部DNS。
+Network Diagnosis Library，support Ping/TcpPing/Rtmp/TraceRoute/DNS/external IP/external DNS。
 
-## 安装
+## Install
 
-通过CocoaPods
+CocoaPods
 
 ```ruby
 pod "QNNetDiag"
 ```
 
-## 运行环境
+## Usage
+### Ping
+```
+@interface YourLogger : NSObject <QNNOutputDelegate>
+...
+@end
+
+[QNNPing start:@"www.google.com" output:[[YourLogger alloc] init] complete:^(QNNPingResult* r) {
+        ...
+}];
+```
+
+### TcpPing
+```
+[QNNTcpPing start:@"www.baidu.com" output:[[QNNTestLogger alloc] init] complete:^(QNNTcpPingResult* r) {
+    ...
+}];
+```
+## Test
 
 
-## 使用方法
-
-
-## 测试
-
-
-### 所有测试
+### All Unit Test
 
 ``` bash
 $ xctool -workspace NetDiag.xcworkspace -scheme NetDiagTests build test -sdk iphonesimulator
 ```
 
-### 指定测试
+## Faq
 
-可以在单元测试上修改，熟悉使用
+- If there are any compile errors, please look at Cocoapods's [troubleshooting](http://guides.cocoapods.org/using/troubleshooting.html)
 
-``` bash
-```
+## Contributing
 
-## 常见问题
+Please Look at[Contributing Guide](https://github.com/qiniu/iOS-netdiag/blob/master/CONTRIBUTING.md)。
 
-- 如果碰到其他编译错误，请参考 Cocoapods 的 [troubleshooting](http://guides.cocoapods.org/using/troubleshooting.html)
+## Contributors
 
-## 代码贡献
+- [Contributors](https://github.com/qiniu/iOS-netdiag/contributors)
 
-详情参考[代码提交指南](https://github.com/qiniu/iOS-netdiag/blob/master/CONTRIBUTING.md)。
+## Contact us
 
-## 贡献记录
+- If you find any bug， please submit [issue](https://github.com/qiniu/iOS-netdiag/issues)
+- If you need any feature， please submit [issue](https://github.com/qiniu/iOS-netdiag/issues)
+- If you want to contribute, please submit pull request
 
-- [所有贡献者](https://github.com/qiniu/iOS-netdiag/contributors)
+## License
 
-## 联系我们
-
-- 如果有什么问题，可以到问答社区提问，[问答社区](http://qiniu.segmentfault.com/)
-- 如果发现了bug， 欢迎提交 [issue](https://github.com/qiniu/iOS-netdiag/issues)
-- 如果有功能需求，欢迎提交 [issue](https://github.com/qiniu/iOS-netdiag/issues)
-- 如果要提交代码，欢迎提交 pull request
-- 欢迎关注我们的[微信](http://www.qiniu.com/#weixin) [微博](http://weibo.com/qiniutek)，及时获取动态信息。
-
-## 代码许可
-
-The MIT License (MIT).详情见 [License文件](https://github.com/qiniu/iOS-netdiag/blob/master/LICENSE).
+The MIT License (MIT). [License](https://github.com/qiniu/iOS-netdiag/blob/master/LICENSE).
