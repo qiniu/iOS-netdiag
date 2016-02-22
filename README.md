@@ -6,6 +6,8 @@
 [![Latest Stable Version](http://img.shields.io/cocoapods/v/QNNetDiag.svg)](https://github.com/qiniu/iOS-netdiag/releases)
 ![Platform](http://img.shields.io/cocoapods/p/QNNetDiag.svg)
 
+## [中文](https://github.com/qiniu/iOS-netdiag/blob/master/README_cn.md)
+
 ## Summary
 
 Network Diagnosis Library，support Ping/TcpPing/Rtmp/TraceRoute/DNS/external IP/external DNS。
