@@ -54,7 +54,7 @@
 
 - (void)testOK {
     __block BOOL run = NO;
-    [QNNRtmpHandshake start:@"src.publish.z1.pili.qiniudns.com" output:[[QNNTestLogger alloc] init] complete:^(QNNRtmpHandshakeResult* r) {
+    [QNNRtmpHandshake start:@"live-rtmp.live.miclle.com" output:[[QNNTestLogger alloc] init] complete:^(QNNRtmpHandshakeResult* r) {
         XCTAssertNotNil(r, @"need result");
         XCTAssertEqual(0, r.code, @"normal code");
         XCTAssert(r.maxTime >= r.avgTime, @"max time >= avg time");
