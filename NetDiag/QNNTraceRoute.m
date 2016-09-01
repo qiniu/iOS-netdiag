@@ -63,8 +63,8 @@
 @implementation QNNTraceRouteResult
 
 - (instancetype)init:(NSInteger)code
-                  ip:(NSString *)ip
-             content:(NSString *)content{
+                  ip:(NSString*)ip
+             content:(NSString*)content {
     if (self = [super init]) {
         _code = code;
         _ip = ip;
@@ -82,7 +82,7 @@
 
 @property (readonly) NSInteger maxTtl;
 @property (atomic) NSInteger stopped;
-@property (nonatomic,strong)NSMutableString * contentString;
+@property (nonatomic, strong) NSMutableString* contentString;
 
 @end
 
@@ -98,7 +98,7 @@
         _complete = complete;
         _maxTtl = maxTtl;
         _stopped = NO;
-        _contentString = [[NSMutableString alloc]init];
+        _contentString = [[NSMutableString alloc] init];
     }
     return self;
 }
@@ -157,7 +157,7 @@ static const int TraceMaxAttempts = 3;
     }
     [_output write:[NSString stringWithFormat:@"%@\n", record]];
     [_contentString appendString:[NSString stringWithFormat:@"%@\n", record]];
-    
+
     return err;
 }
 
@@ -218,7 +218,7 @@ static const int TraceMaxAttempts = 3;
         code = kQNNRequestStoped;
     }
     dispatch_async(dispatch_get_main_queue(), ^(void) {
-        QNNTraceRouteResult* result = [[QNNTraceRouteResult alloc] init:code ip:[NSString stringWithUTF8String:inet_ntoa(addr.sin_addr)]content:_contentString];
+        QNNTraceRouteResult* result = [[QNNTraceRouteResult alloc] init:code ip:[NSString stringWithUTF8String:inet_ntoa(addr.sin_addr)] content:_contentString];
         _complete(result);
     });
 }

@@ -218,7 +218,7 @@ static BOOL isValidResponse(char *buffer, int len, int seq, int identifier) {
 
 @interface QNNPing ()
 @property (readonly) NSString *host;
-@property (nonatomic,assign)NSUInteger size;
+@property (nonatomic, assign) NSUInteger size;
 @property (nonatomic, strong) id<QNNOutputDelegate> output;
 @property (readonly) QNNPingCompleteHandler complete;
 
@@ -232,9 +232,9 @@ static BOOL isValidResponse(char *buffer, int len, int seq, int identifier) {
 - (int)sendPacket:(ICMPPacket *)packet
              sock:(int)sock
            target:(struct sockaddr_in *)addr {
-    if (_size<100) {
+    if (_size < 100) {
         _size = 100;
-    }else if (_size>1400){
+    } else if (_size > 1400) {
         _size = 1400;
     }
     ssize_t sent = sendto(sock, packet, (size_t)_size, 0, (struct sockaddr *)addr, (socklen_t)sizeof(struct sockaddr));
@@ -370,9 +370,12 @@ static BOOL isValidResponse(char *buffer, int len, int seq, int identifier) {
         if (_stopped) {
             code = kQNNRequestStoped;
         }
-        
-        QNNPingResult *result =[self buildResult:code ip:[NSString stringWithUTF8String:inet_ntoa(addr.sin_addr)]
- durations:durations count:index - loss loss:loss totalTime:[[NSDate date] timeIntervalSinceDate:begin] * 1000];
+
+        QNNPingResult *result = [self buildResult:code ip:[NSString stringWithUTF8String:inet_ntoa(addr.sin_addr)]
+                                        durations:durations
+                                            count:index - loss
+                                             loss:loss
+                                        totalTime:[[NSDate date] timeIntervalSinceDate:begin] * 1000];
         [self.output write:result.description];
         dispatch_async(dispatch_get_main_queue(), ^(void) {
             _complete(result);

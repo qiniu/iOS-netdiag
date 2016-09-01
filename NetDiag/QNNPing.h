@@ -14,7 +14,7 @@ extern const int kQNNInvalidPingResponse;
 @interface QNNPingResult : NSObject
 
 @property (readonly) NSInteger code;
-@property (readonly) NSString * ip;
+@property (readonly) NSString* ip;
 @property (readonly) NSUInteger size;
 @property (readonly) NSTimeInterval maxRtt;
 @property (readonly) NSTimeInterval minRtt;
