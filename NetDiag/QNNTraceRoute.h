@@ -14,6 +14,8 @@
 @interface QNNTraceRouteResult : NSObject
 
 @property (readonly) NSInteger code;
+@property (readonly) NSString * ip;
+@property (readonly) NSString * content;
 
 @end
 

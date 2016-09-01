@@ -24,6 +24,8 @@ const int kQNNInvalidPingResponse = -22001;
 @interface QNNPingResult ()
 
 - (instancetype)init:(NSInteger)code
+                size:(NSUInteger)size
+                  ip:(NSString *)ip
                  max:(NSTimeInterval)maxRtt
                  min:(NSTimeInterval)minRtt
                  avg:(NSTimeInterval)avgRtt
@@ -43,6 +45,8 @@ const int kQNNInvalidPingResponse = -22001;
 }
 
 - (instancetype)init:(NSInteger)code
+                  ip:(NSString *)ip
+                size:(NSUInteger)size
                  max:(NSTimeInterval)maxRtt
                  min:(NSTimeInterval)minRtt
                  avg:(NSTimeInterval)avgRtt
@@ -52,6 +56,8 @@ const int kQNNInvalidPingResponse = -22001;
               stddev:(NSTimeInterval)stddev {
     if (self = [super init]) {
         _code = code;
+        _ip = ip;
+        _size = size;
         _minRtt = minRtt;
         _avgRtt = avgRtt;
         _maxRtt = maxRtt;
@@ -212,6 +218,7 @@ static BOOL isValidResponse(char *buffer, int len, int seq, int identifier) {
 
 @interface QNNPing ()
 @property (readonly) NSString *host;
+@property (nonatomic,assign)NSUInteger size;
 @property (nonatomic, strong) id<QNNOutputDelegate> output;
 @property (readonly) QNNPingCompleteHandler complete;
 
@@ -225,7 +232,12 @@ static BOOL isValidResponse(char *buffer, int len, int seq, int identifier) {
 - (int)sendPacket:(ICMPPacket *)packet
              sock:(int)sock
            target:(struct sockaddr_in *)addr {
-    ssize_t sent = sendto(sock, packet, (size_t)kQNNPacketSize, 0, (struct sockaddr *)addr, (socklen_t)sizeof(struct sockaddr));
+    if (_size<100) {
+        _size = 100;
+    }else if (_size>1400){
+        _size = 1400;
+    }
+    ssize_t sent = sendto(sock, packet, (size_t)_size, 0, (struct sockaddr *)addr, (socklen_t)sizeof(struct sockaddr));
     if (sent < 0) {
         return errno;
     }
@@ -270,12 +282,13 @@ static BOOL isValidResponse(char *buffer, int len, int seq, int identifier) {
 }
 
 - (QNNPingResult *)buildResult:(NSInteger)code
+                            ip:(NSString *)ip
                      durations:(NSTimeInterval *)durations
                          count:(NSInteger)count
                           loss:(NSInteger)loss
                      totalTime:(NSTimeInterval)time {
     if (code != 0 && code != kQNNRequestStoped) {
-        return [[QNNPingResult alloc] init:code max:0 min:0 avg:0 loss:1 count:1 totalTime:time stddev:0];
+        return [[QNNPingResult alloc] init:code ip:ip size:_size max:0 min:0 avg:0 loss:1 count:1 totalTime:time stddev:0];
     }
     NSTimeInterval max = 0;
     NSTimeInterval min = 10000000;
@@ -294,7 +307,7 @@ static BOOL isValidResponse(char *buffer, int len, int seq, int identifier) {
     NSTimeInterval avg = sum / count;
     NSTimeInterval avg2 = sum2 / count;
     NSTimeInterval stddev = sqrt(avg2 - avg * avg);
-    return [[QNNPingResult alloc] init:code max:max min:min avg:avg loss:loss count:count totalTime:time stddev:stddev];
+    return [[QNNPingResult alloc] init:code ip:ip size:_size max:max min:min avg:avg loss:loss count:count totalTime:time stddev:stddev];
 }
 
 - (void)run {
@@ -311,7 +324,7 @@ static BOOL isValidResponse(char *buffer, int len, int seq, int identifier) {
             [self.output write:@"Problem accessing the DNS"];
             if (_complete != nil) {
                 dispatch_async(dispatch_get_main_queue(), ^(void) {
-                    QNNPingResult *result = [[QNNPingResult alloc] init:-1006 max:0 min:0 avg:0 loss:0 count:0 totalTime:0 stddev:0];
+                    QNNPingResult *result = [[QNNPingResult alloc] init:-1006 ip:nil size:_size max:0 min:0 avg:0 loss:0 count:0 totalTime:0 stddev:0];
                     _complete(result);
                 });
             }
@@ -357,7 +370,9 @@ static BOOL isValidResponse(char *buffer, int len, int seq, int identifier) {
         if (_stopped) {
             code = kQNNRequestStoped;
         }
-        QNNPingResult *result = [self buildResult:code durations:durations count:index - loss loss:loss totalTime:[[NSDate date] timeIntervalSinceDate:begin] * 1000];
+        
+        QNNPingResult *result =[self buildResult:code ip:[NSString stringWithUTF8String:inet_ntoa(addr.sin_addr)]
+ durations:durations count:index - loss loss:loss totalTime:[[NSDate date] timeIntervalSinceDate:begin] * 1000];
         [self.output write:result.description];
         dispatch_async(dispatch_get_main_queue(), ^(void) {
             _complete(result);
@@ -367,12 +382,14 @@ static BOOL isValidResponse(char *buffer, int len, int seq, int identifier) {
 }
 
 - (instancetype)init:(NSString *)host
+                size:(NSUInteger)size
               output:(id<QNNOutputDelegate>)output
             complete:(QNNPingCompleteHandler)complete
             interval:(NSInteger)interval
                count:(NSInteger)count {
     if (self = [super init]) {
         _host = host;
+        _size = size;
         _output = output;
         _complete = complete;
         _interval = interval;
@@ -382,17 +399,19 @@ static BOOL isValidResponse(char *buffer, int len, int seq, int identifier) {
 }
 
 + (instancetype)start:(NSString *)host
+                 size:(NSUInteger)size
                output:(id<QNNOutputDelegate>)output
              complete:(QNNPingCompleteHandler)complete {
-    return [QNNPing start:host output:output complete:complete interval:200 count:10];
+    return [QNNPing start:host size:size output:output complete:complete interval:200 count:10];
 }
 
 + (instancetype)start:(NSString *)host
+                 size:(NSUInteger)size
                output:(id<QNNOutputDelegate>)output
              complete:(QNNPingCompleteHandler)complete
              interval:(NSInteger)interval
                 count:(NSInteger)count {
-    QNNPing *ping = [[QNNPing alloc] init:host output:output complete:complete interval:interval count:count];
+    QNNPing *ping = [[QNNPing alloc] init:host size:size output:output complete:complete interval:interval count:count];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
         [ping run];
     });
