@@ -62,9 +62,13 @@
 
 @implementation QNNTraceRouteResult
 
-- (instancetype)init:(NSInteger)code {
+- (instancetype)init:(NSInteger)code
+                  ip:(NSString*)ip
+             content:(NSString*)content {
     if (self = [super init]) {
         _code = code;
+        _ip = ip;
+        _content = content;
     }
     return self;
 }
@@ -78,6 +82,7 @@
 
 @property (readonly) NSInteger maxTtl;
 @property (atomic) NSInteger stopped;
+@property (nonatomic, strong) NSMutableString* contentString;
 
 @end
 
@@ -93,6 +98,7 @@
         _complete = complete;
         _maxTtl = maxTtl;
         _stopped = NO;
+        _contentString = [[NSMutableString alloc] init];
     }
     return self;
 }
@@ -150,6 +156,8 @@ static const int TraceMaxAttempts = 3;
         }
     }
     [_output write:[NSString stringWithFormat:@"%@\n", record]];
+    [_contentString appendString:[NSString stringWithFormat:@"%@\n", record]];
+
     return err;
 }
 
@@ -167,7 +175,7 @@ static const int TraceMaxAttempts = 3;
             [self.output write:@"Problem accessing the DNS"];
             if (_complete != nil) {
                 dispatch_async(dispatch_get_main_queue(), ^(void) {
-                    QNNTraceRouteResult* result = [[QNNTraceRouteResult alloc] init:-1006];
+                    QNNTraceRouteResult* result = [[QNNTraceRouteResult alloc] init:-1006 ip:nil content:nil];
                     _complete(result);
                 });
             }
@@ -182,7 +190,7 @@ static const int TraceMaxAttempts = 3;
         NSLog(@"fcntl socket error!");
         if (_complete != nil) {
             dispatch_async(dispatch_get_main_queue(), ^(void) {
-                QNNTraceRouteResult* result = [[QNNTraceRouteResult alloc] init:-1];
+                QNNTraceRouteResult* result = [[QNNTraceRouteResult alloc] init:-1 ip:[NSString stringWithUTF8String:inet_ntoa(addr.sin_addr)] content:nil];
                 _complete(result);
             });
         }
@@ -194,13 +202,14 @@ static const int TraceMaxAttempts = 3;
 
     int ttl = 1;
     in_addr_t ip = 0;
+    NSDate* startDate = [NSDate date];
     do {
         int t = setsockopt(send_sock, IPPROTO_IP, IP_TTL, &ttl, sizeof(ttl));
         if (t < 0) {
             NSLog(@"errro %s\n", strerror(t));
         }
         [self sendAndRecv:send_sock recv:recv_sock addr:&addr ttl:ttl ip:&ip];
-    } while (++ttl <= _maxTtl && !_stopped && ip != addr.sin_addr.s_addr);
+    } while (++ttl <= _maxTtl && !_stopped && ip != addr.sin_addr.s_addr && [[NSDate date] timeIntervalSinceDate:startDate] <= 20);
 
     close(send_sock);
     close(recv_sock);
@@ -210,7 +219,7 @@ static const int TraceMaxAttempts = 3;
         code = kQNNRequestStoped;
     }
     dispatch_async(dispatch_get_main_queue(), ^(void) {
-        QNNTraceRouteResult* result = [[QNNTraceRouteResult alloc] init:code];
+        QNNTraceRouteResult* result = [[QNNTraceRouteResult alloc] init:code ip:[NSString stringWithUTF8String:inet_ntoa(addr.sin_addr)] content:_contentString];
         _complete(result);
     });
 }
