@@ -24,8 +24,8 @@ const int kQNNInvalidPingResponse = -22001;
 @interface QNNPingResult ()
 
 - (instancetype)init:(NSInteger)code
-                size:(NSUInteger)size
                   ip:(NSString *)ip
+                size:(NSUInteger)size
                  max:(NSTimeInterval)maxRtt
                  min:(NSTimeInterval)minRtt
                  avg:(NSTimeInterval)avgRtt
