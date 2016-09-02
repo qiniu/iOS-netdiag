@@ -202,13 +202,14 @@ static const int TraceMaxAttempts = 3;
 
     int ttl = 1;
     in_addr_t ip = 0;
+    NSDate* startDate = [NSDate date];
     do {
         int t = setsockopt(send_sock, IPPROTO_IP, IP_TTL, &ttl, sizeof(ttl));
         if (t < 0) {
             NSLog(@"errro %s\n", strerror(t));
         }
         [self sendAndRecv:send_sock recv:recv_sock addr:&addr ttl:ttl ip:&ip];
-    } while (++ttl <= _maxTtl && !_stopped && ip != addr.sin_addr.s_addr);
+    } while (++ttl <= _maxTtl && !_stopped && ip != addr.sin_addr.s_addr && [[NSDate date] timeIntervalSinceDate:startDate] <= 20);
 
     close(send_sock);
     close(recv_sock);
