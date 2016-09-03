@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DD630B3859FFBAD34C8CAFCF /* libPods-NetDiagTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CCDA8C7442728256057F50B3 /* libPods-NetDiagTests.a */; };
 		DF2B76EC1C33702D00643678 /* QNNPing.m in Sources */ = {isa = PBXBuildFile; fileRef = DF2B76EB1C33702D00643678 /* QNNPing.m */; };
 		DF47525E1C740F0100EEAF4B /* PingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47525D1C740F0100EEAF4B /* PingTest.m */; };
 		DF4752601C743A8600EEAF4B /* ExternalIpTest.m in Sources */ = {isa = PBXBuildFile; fileRef = DF47525F1C743A8600EEAF4B /* ExternalIpTest.m */; };
@@ -52,9 +51,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		383B373CBCBF89878ED03538 /* Pods-NetDiagTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetDiagTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-NetDiagTests/Pods-NetDiagTests.release.xcconfig"; sourceTree = "<group>"; };
-		611872D8785B08947F3AFEF9 /* Pods-NetDiagTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetDiagTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NetDiagTests/Pods-NetDiagTests.debug.xcconfig"; sourceTree = "<group>"; };
-		CCDA8C7442728256057F50B3 /* libPods-NetDiagTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NetDiagTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF2B76EA1C33702D00643678 /* QNNPing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNPing.h; sourceTree = "<group>"; };
 		DF2B76EB1C33702D00643678 /* QNNPing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNPing.m; sourceTree = "<group>"; };
 		DF2B76ED1C33706900643678 /* QNNProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNProtocols.h; sourceTree = "<group>"; };
@@ -94,7 +90,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF8DFFD41C61DA1B00174DA9 /* libNetDiag.a in Frameworks */,
-				DD630B3859FFBAD34C8CAFCF /* libPods-NetDiagTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,18 +107,8 @@
 			isa = PBXGroup;
 			children = (
 				DFA9E17B1C6DB22C00C17111 /* libresolv.tbd */,
-				CCDA8C7442728256057F50B3 /* libPods-NetDiagTests.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		CB5C80A0FE813C3DE7F810D4 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				611872D8785B08947F3AFEF9 /* Pods-NetDiagTests.debug.xcconfig */,
-				383B373CBCBF89878ED03538 /* Pods-NetDiagTests.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		DF8DFFD01C61DA1B00174DA9 /* NetDiagTests */ = {
@@ -150,7 +135,6 @@
 				DF8DFFD01C61DA1B00174DA9 /* NetDiagTests */,
 				DFCEC6461C2EC01D0058EE65 /* Products */,
 				7EC51E005E7B857726052BEF /* Frameworks */,
-				CB5C80A0FE813C3DE7F810D4 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -366,7 +350,6 @@
 /* Begin XCBuildConfiguration section */
 		DF8DFFD81C61DA1B00174DA9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 611872D8785B08947F3AFEF9 /* Pods-NetDiagTests.debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = NetDiagTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -381,7 +364,6 @@
 		};
 		DF8DFFD91C61DA1B00174DA9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 383B373CBCBF89878ED03538 /* Pods-NetDiagTests.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = NetDiagTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
