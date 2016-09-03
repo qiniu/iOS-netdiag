@@ -1,4 +1,10 @@
 language: objective-c
+
+rvm:
+  - 2.2.0
+
+before_install:
+  - gem install cocoapods --pre
+
 script:
-  - sudo gem install cocoapods --pre
   - xctool -workspace NetDiag.xcworkspace -scheme NetDiagTests build test -sdk iphonesimulator
