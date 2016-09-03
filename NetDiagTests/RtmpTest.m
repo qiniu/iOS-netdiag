@@ -29,16 +29,17 @@
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
 }
-- (void)testTimeout {
-    __block BOOL run = NO;
-    [QNNRtmpHandshake start:@"up.qiniu.com" output:[[QNNTestLogger alloc] init] complete:^(QNNRtmpHandshakeResult* r) {
-        XCTAssertNotNil(r, @"need result");
-        XCTAssertEqual(ETIMEDOUT, r.code, @"timeout code");
-        run = YES;
-    }];
-    AGWW_WAIT_WHILE(!run, 100.0);
-    XCTAssert(run, @"PASS");
-}
+
+//- (void)testTimeout {
+//    __block BOOL run = NO;
+//    [QNNRtmpHandshake start:@"up.qiniu.com" output:[[QNNTestLogger alloc] init] complete:^(QNNRtmpHandshakeResult* r) {
+//        XCTAssertNotNil(r, @"need result");
+//        XCTAssertEqual(ETIMEDOUT, r.code, @"timeout code");
+//        run = YES;
+//    }];
+//    AGWW_WAIT_WHILE(!run, 100.0);
+//    XCTAssert(run, @"PASS");
+//}
 
 - (void)testStop {
     __block BOOL run = NO;
