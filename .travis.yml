@@ -1,3 +1,4 @@
 language: objective-c
 script:
+  - sudo gem install cocoapods --pre
   - xctool -workspace NetDiag.xcworkspace -scheme NetDiagTests build test -sdk iphonesimulator
