@@ -31,8 +31,9 @@
 
 - (void)testOK {
     __block BOOL run = NO;
-    [QNNHttp start:@"http://www.baidu.com" output:[[QNNTestLogger alloc] init] complete:^(QNNHttpResult* r) {
+    [QNNHttp start:@"https://www.baidu.com" output:[[QNNTestLogger alloc] init] complete:^(QNNHttpResult* r) {
         XCTAssertNotNil(r, @"need result");
+        XCTAssertNotNil(r.ip, @"need ip");
         XCTAssertNotNil(r.headers, @"need headers");
         XCTAssertNotNil(r.body, @"need body");
         XCTAssertEqual(200, r.code, @"normal code");

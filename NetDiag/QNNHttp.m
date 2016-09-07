@@ -7,6 +7,9 @@
 //
 
 #import "QNNHttp.h"
+#import <arpa/inet.h>
+#import <netdb.h>
+#import <netinet/in.h>
 
 @implementation QNNHttpResult
 
@@ -22,11 +25,13 @@
 }
 
 - (instancetype)init:(NSInteger)code
+                  ip:(NSString *)ip
             duration:(NSTimeInterval)duration
              headers:(NSDictionary *)headers
                 body:(NSData *)body {
     if (self = [super init]) {
         _code = code;
+        _ip = ip;
         _duration = duration;
         _headers = headers;
         _body = body;
@@ -55,10 +60,32 @@
     return self;
 }
 
+- (NSString *)reserveUrlToIp {
+    NSString *ip = nil;
+    NSString *urlStr = [[_url componentsSeparatedByString:@"//"] lastObject];
+
+    struct sockaddr_in addr;
+    memset(&addr, 0, sizeof(addr));
+    addr.sin_len = sizeof(addr);
+    addr.sin_family = AF_INET;
+    addr.sin_port = htons(80);
+    addr.sin_addr.s_addr = inet_addr([urlStr UTF8String]);
+    if (addr.sin_addr.s_addr == INADDR_NONE) {
+        struct hostent *host = gethostbyname([urlStr UTF8String]);
+        if (host == NULL || host->h_addr == NULL) {
+            return ip;
+        }
+        addr.sin_addr = *(struct in_addr *)host->h_addr;
+        ip = [NSString stringWithUTF8String:inet_ntoa(addr.sin_addr)];
+    }
+    return ip;
+}
+
 - (void)run {
     if (_output) {
         [_output write:[NSString stringWithFormat:@"GET %@", _url]];
     }
+
     NSDate *t1 = [NSDate date];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:_url]];
     [urlRequest setHTTPMethod:@"GET"];
@@ -84,11 +111,12 @@
         return;
     }
     if (httpError != nil) {
-        QNNHttpResult *result = [[QNNHttpResult alloc] init:httpError.code duration:duration headers:nil body:nil];
+        QNNHttpResult *result = [[QNNHttpResult alloc] init:httpError.code ip:[self reserveUrlToIp] duration:duration headers:nil body:nil];
         _complete(result);
         return;
     }
-    QNNHttpResult *result = [[QNNHttpResult alloc] init:response.statusCode duration:duration headers:response.allHeaderFields body:d];
+
+    QNNHttpResult *result = [[QNNHttpResult alloc] init:response.statusCode ip:[self reserveUrlToIp] duration:duration headers:response.allHeaderFields body:d];
     _complete(result);
 }
 
