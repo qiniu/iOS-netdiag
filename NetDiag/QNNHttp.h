@@ -12,6 +12,7 @@
 @interface QNNHttpResult : NSObject
 
 @property (readonly) NSInteger code;
+@property (readonly) NSString* ip;
 @property (readonly) NSTimeInterval duration;
 @property (readonly) NSDictionary* headers;
 @property (readonly) NSData* body;

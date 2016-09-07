@@ -12,10 +12,14 @@
 @interface QNNTcpPingResult : NSObject
 
 @property (readonly) NSInteger code;
+@property (readonly) NSString* ip;
 @property (readonly) NSTimeInterval maxTime;
 @property (readonly) NSTimeInterval minTime;
 @property (readonly) NSTimeInterval avgTime;
+@property (readonly) NSInteger loss;
 @property (readonly) NSInteger count;
+@property (readonly) NSTimeInterval totalTime;
+@property (readonly) NSTimeInterval stddev;
 
 - (NSString*)description;
 

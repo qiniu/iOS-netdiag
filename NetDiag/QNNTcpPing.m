@@ -20,10 +20,14 @@
 @interface QNNTcpPingResult ()
 
 - (instancetype)init:(NSInteger)code
+                  ip:(NSString *)ip
                  max:(NSTimeInterval)maxTime
                  min:(NSTimeInterval)minTime
                  avg:(NSTimeInterval)avgTime
-               count:(NSInteger)count;
+                loss:(NSInteger)loss
+               count:(NSInteger)count
+           totalTime:(NSTimeInterval)totalTime
+              stddev:(NSTimeInterval)stddev;
 @end
 
 @implementation QNNTcpPingResult
@@ -36,16 +40,24 @@
 }
 
 - (instancetype)init:(NSInteger)code
+                  ip:(NSString *)ip
                  max:(NSTimeInterval)maxTime
                  min:(NSTimeInterval)minTime
                  avg:(NSTimeInterval)avgTime
-               count:(NSInteger)count {
+                loss:(NSInteger)loss
+               count:(NSInteger)count
+           totalTime:(NSTimeInterval)totalTime
+              stddev:(NSTimeInterval)stddev {
     if (self = [super init]) {
         _code = code;
+        _ip = ip;
         _minTime = minTime;
         _avgTime = avgTime;
         _maxTime = maxTime;
+        _loss = loss;
         _count = count;
+        _totalTime = totalTime;
+        _stddev = stddev;
     }
     return self;
 }
@@ -82,6 +94,7 @@
 }
 
 - (void)run {
+    NSDate *begin = [NSDate date];
     [self.output write:[NSString stringWithFormat:@"connect to host %@:%lu ...\n", _host, (unsigned long)_port]];
     struct sockaddr_in addr;
     memset(&addr, 0, sizeof(addr));
@@ -95,7 +108,7 @@
             [self.output write:@"Problem accessing the DNS"];
             if (_complete != nil) {
                 dispatch_async(dispatch_get_main_queue(), ^(void) {
-                    _complete([self buildResult:-1006 durations:nil count:0]);
+                    _complete([self buildResult:-1006 ip:nil durations:nil loss:0 count:0 totalTime:0]);
                 });
             }
             return;
@@ -103,10 +116,11 @@
         addr.sin_addr = *(struct in_addr *)host->h_addr;
         [self.output write:[NSString stringWithFormat:@"connect to ip %s:%lu ...\n", inet_ntoa(addr.sin_addr), (unsigned long)_port]];
     }
-
+    NSString *ip = [NSString stringWithUTF8String:inet_ntoa(addr.sin_addr)];
     NSTimeInterval *intervals = (NSTimeInterval *)malloc(sizeof(NSTimeInterval) * _count);
     int index = 0;
     int r = 0;
+    int loss = 0;
     do {
         NSDate *t1 = [NSDate date];
         r = [self connect:&addr];
@@ -116,6 +130,7 @@
             [self.output write:[NSString stringWithFormat:@"connected to %s:%lu, %f ms\n", inet_ntoa(addr.sin_addr), (unsigned long)_port, duration * 1000]];
         } else {
             [self.output write:[NSString stringWithFormat:@"connect failed to %s:%lu, %f ms, error %d\n", inet_ntoa(addr.sin_addr), (unsigned long)_port, duration * 1000, r]];
+            loss++;
         }
 
         if (index < _count && !_stopped && r == 0) {
@@ -128,22 +143,27 @@
         if (_stopped) {
             code = kQNNRequestStoped;
         }
+        __block NSDate *startDate = begin;
         dispatch_async(dispatch_get_main_queue(), ^(void) {
-            _complete([self buildResult:code durations:intervals count:index]);
+            _complete([self buildResult:code ip:ip durations:intervals loss:loss count:index totalTime:[[NSDate date] timeIntervalSinceDate:startDate] * 1000]);
         });
     }
     free(intervals);
 }
 
 - (QNNTcpPingResult *)buildResult:(NSInteger)code
+                               ip:(NSString *)ip
                         durations:(NSTimeInterval *)durations
-                            count:(NSInteger)count {
+                             loss:(NSInteger)loss
+                            count:(NSInteger)count
+                        totalTime:(NSTimeInterval)time {
     if (code != 0 && code != kQNNRequestStoped) {
-        return [[QNNTcpPingResult alloc] init:code max:0 min:0 avg:0 count:1];
+        return [[QNNTcpPingResult alloc] init:code ip:ip max:0 min:0 avg:0 loss:1 count:1 totalTime:time stddev:0];
     }
     NSTimeInterval max = 0;
     NSTimeInterval min = 10000000;
     NSTimeInterval sum = 0;
+    NSTimeInterval sum2 = 0;
     for (int i = 0; i < count; i++) {
         if (durations[i] > max) {
             max = durations[i];
@@ -152,9 +172,12 @@
             min = durations[i];
         }
         sum += durations[i];
+        sum2 += durations[i] * durations[i];
     }
     NSTimeInterval avg = sum / count;
-    return [[QNNTcpPingResult alloc] init:code max:max min:min avg:avg count:count];
+    NSTimeInterval avg2 = sum2 / count;
+    NSTimeInterval stddev = sqrt(avg2 - avg * avg);
+    return [[QNNTcpPingResult alloc] init:code ip:ip max:max min:min avg:avg loss:loss count:count totalTime:time stddev:stddev];
 }
 
 - (int)connect:(struct sockaddr_in *)addr {
