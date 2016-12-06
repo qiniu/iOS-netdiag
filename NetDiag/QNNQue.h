@@ -9,6 +9,8 @@
 #ifndef QNNQue_h
 #define QNNQue_h
 
+#import <Foundation/Foundation.h>
+
 @interface QNNQue : NSObject
 
 + (void)async_run_serial:(dispatch_block_t)block;
