@@ -12,7 +12,7 @@
 
 @interface QNNQue ()
 
-+(instancetype)sharedInstance;
++ (instancetype)sharedInstance;
 
 @property (nonatomic) dispatch_queue_t que;
 
@@ -20,30 +20,30 @@
 
 @implementation QNNQue
 
-+(instancetype)sharedInstance{
++ (instancetype)sharedInstance {
     static QNNQue *sharedInstance = nil;
-    
+
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedInstance = [[self alloc] init];
     });
-    
+
     return sharedInstance;
 }
--(instancetype)init{
+- (instancetype)init {
     if (self = [super init]) {
         _que = dispatch_queue_create("qnn_que_serial", DISPATCH_QUEUE_SERIAL);
     }
     return self;
 }
 
-+ (void)async_run_serial:(dispatch_block_t)block{
++ (void)async_run_serial:(dispatch_block_t)block {
     dispatch_async([QNNQue sharedInstance].que, ^{
         block();
     });
 }
 
-+ (void)async_run_main:(dispatch_block_t)block{
++ (void)async_run_main:(dispatch_block_t)block {
     dispatch_async(dispatch_get_main_queue(), block);
 }
 

@@ -190,7 +190,7 @@ static const int TraceMaxAttempts = 3;
     if (-1 == fcntl(recv_sock, F_SETFL, O_NONBLOCK)) {
         NSLog(@"fcntl socket error!");
         if (_complete != nil) {
-            [QNNQue async_run_main: ^(void) {
+            [QNNQue async_run_main:^(void) {
                 QNNTraceRouteResult* result = [[QNNTraceRouteResult alloc] init:-1 ip:[NSString stringWithUTF8String:inet_ntoa(addr.sin_addr)] content:nil];
                 _complete(result);
             }];
