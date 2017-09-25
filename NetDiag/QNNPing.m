@@ -90,6 +90,8 @@ struct IPHeader {
 };
 typedef struct IPHeader IPHeader;
 
+#define check_compile_time __Check_Compile_Time
+
 check_compile_time(sizeof(IPHeader) == 20);
 check_compile_time(offsetof(IPHeader, versionAndHeaderLength) == 0);
 check_compile_time(offsetof(IPHeader, differentiatedServices) == 1);
