@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'QNNetDiag'
-  s.version      = '0.0.4'
+  s.version      = '0.0.6'
   s.summary      = 'Qiniu Net Diagnostic library'
   s.homepage     = 'https://github.com/qiniu/iOS-netdiag'
   s.social_media_url = 'http://weibo.com/qiniutek'
