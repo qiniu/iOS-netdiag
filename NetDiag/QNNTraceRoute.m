@@ -131,13 +131,15 @@ static const int TraceMaxAttempts = 3;
             break;
         }
 
-        struct timeval tv;
         fd_set readfds;
-        tv.tv_sec = 3;
-        tv.tv_usec = 0;
+        
+        struct timespec ts;
+        ts.tv_sec = 3;
+        ts.tv_nsec = 0;
+        
         FD_ZERO(&readfds);
         FD_SET(icmpSock, &readfds);
-        select(icmpSock + 1, &readfds, NULL, NULL, &tv);
+        pselect(icmpSock + 1, &readfds, NULL, NULL, &ts, NULL);
         if (FD_ISSET(icmpSock, &readfds) > 0) {
             ssize_t res = recvfrom(icmpSock, buff, sizeof(buff), 0, (struct sockaddr*)&storageAddr, &n);
             if (res < 0) {
