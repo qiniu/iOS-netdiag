@@ -312,15 +312,21 @@ static BOOL isValidResponse(char *buffer, int len, int seq, int identifier) {
 }
 
 - (void)run {
+    const char *hostaddr = [_host UTF8String];
+    if (hostaddr == NULL) {
+        hostaddr = "\0";
+    }
+
     NSDate *begin = [NSDate date];
     struct sockaddr_in addr;
     memset(&addr, 0, sizeof(addr));
     addr.sin_len = sizeof(addr);
     addr.sin_family = AF_INET;
     addr.sin_port = htons(30002);
-    addr.sin_addr.s_addr = inet_addr([_host UTF8String]);
+    addr.sin_addr.s_addr = inet_addr(hostaddr);
+
     if (addr.sin_addr.s_addr == INADDR_NONE) {
-        struct hostent *host = gethostbyname([_host UTF8String]);
+        struct hostent *host = gethostbyname(hostaddr);
         if (host == NULL || host->h_addr == NULL) {
             [self.output write:@"Problem accessing the DNS"];
             if (_complete != nil) {
@@ -415,6 +421,9 @@ static BOOL isValidResponse(char *buffer, int len, int seq, int identifier) {
              complete:(QNNPingCompleteHandler)complete
              interval:(NSInteger)interval
                 count:(NSInteger)count {
+    if (host == nil) {
+        host = @"";
+    }
     QNNPing *ping = [[QNNPing alloc] init:host size:size output:output complete:complete interval:interval count:count];
     [QNNQue async_run_serial:^{
         [ping run];

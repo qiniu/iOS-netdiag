@@ -200,7 +200,7 @@ static int verify_s2(int sock, char* server_sig, char* client_sig) {
             complete:(QNNRtmpHandshakeCompleteHandler)complete
                count:(NSInteger)count {
     if (self = [super init]) {
-        _host = host;
+        _host = host == nil ? @"" : host;
         _port = port;
         _output = output;
         _complete = complete;
@@ -217,7 +217,11 @@ static int verify_s2(int sock, char* server_sig, char* client_sig) {
     addr.sin_len = sizeof(addr);
     addr.sin_family = AF_INET;
     addr.sin_port = htons(_port);
-    addr.sin_addr.s_addr = inet_addr([_host UTF8String]);
+    const char* hostaddr = [_host UTF8String];
+    if (hostaddr == NULL) {
+        hostaddr = "\0";
+    }
+    addr.sin_addr.s_addr = inet_addr(hostaddr);
     if (addr.sin_addr.s_addr == INADDR_NONE) {
         struct hostent* host = gethostbyname([_host UTF8String]);
         if (host == NULL || host->h_addr == NULL) {

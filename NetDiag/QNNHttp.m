@@ -53,7 +53,7 @@
               output:(id<QNNOutputDelegate>)output
             complete:(QNNHttpCompleteHandler)complete {
     if (self = [super init]) {
-        _url = url;
+        _url = url == nil ? @"" : url;
         _output = output;
         _complete = complete;
     }
@@ -62,16 +62,23 @@
 
 - (NSString *)reserveUrlToIp {
     NSString *ip = nil;
-    NSString *urlStr = [[_url componentsSeparatedByString:@"//"] lastObject];
-
+    NSURL *url = [NSURL URLWithString:_url];
+    NSString *domain = url.host;
+    if (domain == nil) {
+        domain = @"";
+    }
+    const char *d = [domain UTF8String];
+    if (d == NULL) {
+        d = "\0";
+    }
     struct sockaddr_in addr;
     memset(&addr, 0, sizeof(addr));
     addr.sin_len = sizeof(addr);
     addr.sin_family = AF_INET;
     addr.sin_port = htons(80);
-    addr.sin_addr.s_addr = inet_addr([urlStr UTF8String]);
+    addr.sin_addr.s_addr = inet_addr(d);
     if (addr.sin_addr.s_addr == INADDR_NONE) {
-        struct hostent *host = gethostbyname([urlStr UTF8String]);
+        struct hostent *host = gethostbyname(d);
         if (host == NULL || host->h_addr == NULL) {
             return ip;
         }
@@ -123,6 +130,9 @@
 + (instancetype)start:(NSString *)url
                output:(id<QNNOutputDelegate>)output
              complete:(QNNHttpCompleteHandler)complete {
+    if (url == nil) {
+        url = @"";
+    }
     QNNHttp *http = [[QNNHttp alloc] init:url output:output complete:complete];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
         [http run];

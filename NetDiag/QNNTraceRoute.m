@@ -97,7 +97,7 @@
             complete:(QNNTraceRouteCompleteHandler)complete
               maxTtl:(NSInteger)maxTtl {
     if (self = [super init]) {
-        _host = host;
+        _host = host == nil ? @"" : host;
         _output = output;
         _complete = complete;
         _maxTtl = maxTtl;
@@ -171,10 +171,14 @@ static const int TraceMaxAttempts = 3;
     addr.sin_len = sizeof(addr);
     addr.sin_family = AF_INET;
     addr.sin_port = htons(30002);
-    addr.sin_addr.s_addr = inet_addr([_host UTF8String]);
+    const char* hostaddr = [_host UTF8String];
+    if (hostaddr == NULL) {
+        hostaddr = "\0";
+    }
+    addr.sin_addr.s_addr = inet_addr(hostaddr);
     [self.output write:[NSString stringWithFormat:@"traceroute to %@ ...\n", _host]];
     if (addr.sin_addr.s_addr == INADDR_NONE) {
-        struct hostent* host = gethostbyname([_host UTF8String]);
+        struct hostent* host = gethostbyname(hostaddr);
         if (host == NULL || host->h_addr == NULL) {
             [self.output write:@"Problem accessing the DNS"];
             if (_complete != nil) {

@@ -124,7 +124,7 @@ static int setup_dns_server(res_state res, const char *dns_server) {
               output:(id<QNNOutputDelegate>)output
             complete:(QNNNslookupCompleteHandler)complete {
     if (self = [super init]) {
-        _domain = domain;
+        _domain = domain == nil ? @"" : domain;
         _dnsServer = dnsServer;
         _output = output;
         _complete = complete;
