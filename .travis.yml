@@ -1,10 +1,8 @@
 language: objective-c
-
-rvm:
-  - 2.2.0
+osx_image: xcode9.2
 
 before_install:
-  - gem install cocoapods --pre
+  - pod install
 
 script:
-  - xctool -workspace NetDiag.xcworkspace -scheme NetDiagTests build test -sdk iphonesimulator
+  - xcodebuild -workspace NetDiag.xcworkspace -scheme NetDiagTests -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 5s,OS=11.2' test

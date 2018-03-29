@@ -32,16 +32,16 @@
 - (void)testFailure {
 }
 
-- (void)testTimeout {
-    __block BOOL run = NO;
-    [QNNTcpPing start:@"up.qiniu.com" port:9999 count:2 output:[[QNNTestLogger alloc] init] complete:^(QNNTcpPingResult* r) {
-        XCTAssertNotNil(r, @"need result");
-        XCTAssertEqual(ETIMEDOUT, r.code, @"timeout code");
-        run = YES;
-    }];
-    AGWW_WAIT_WHILE(!run, 100.0);
-    XCTAssert(run, @"PASS");
-}
+//- (void)testTimeout {
+//    __block BOOL run = NO;
+//    [QNNTcpPing start:@"up.qiniu.com" port:9999 count:2 output:[[QNNTestLogger alloc] init] complete:^(QNNTcpPingResult* r) {
+//        XCTAssertNotNil(r, @"need result");
+//        XCTAssertEqual(ETIMEDOUT, r.code, @"timeout code");
+//        run = YES;
+//    }];
+//    AGWW_WAIT_WHILE(!run, 100.0);
+//    XCTAssert(run, @"PASS");
+//}
 
 - (void)testStop {
     __block BOOL run = NO;
