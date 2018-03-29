@@ -53,18 +53,18 @@
     XCTAssert(run, @"PASS");
 }
 
-- (void)testOK {
-    __block BOOL run = NO;
-    [QNNRtmpHandshake start:@"live-rtmp.live.miclle.com" output:[[QNNTestLogger alloc] init] complete:^(QNNRtmpHandshakeResult* r) {
-        XCTAssertNotNil(r, @"need result");
-        XCTAssertEqual(0, r.code, @"normal code");
-        XCTAssert(r.maxTime >= r.avgTime, @"max time >= avg time");
-        XCTAssert(r.minTime <= r.avgTime, @"min time =< avg time");
-        run = YES;
-    }];
-
-    AGWW_WAIT_WHILE(!run, 30.0);
-    XCTAssert(run, @"PASS");
-}
+//- (void)testOK {
+//    __block BOOL run = NO;
+//    [QNNRtmpHandshake start:@"live-rtmp.live.miclle.com" output:[[QNNTestLogger alloc] init] complete:^(QNNRtmpHandshakeResult* r) {
+//        XCTAssertNotNil(r, @"need result");
+//        XCTAssertEqual(0, r.code, @"normal code");
+//        XCTAssert(r.maxTime >= r.avgTime, @"max time >= avg time");
+//        XCTAssert(r.minTime <= r.avgTime, @"min time =< avg time");
+//        run = YES;
+//    }];
+//
+//    AGWW_WAIT_WHILE(!run, 30.0);
+//    XCTAssert(run, @"PASS");
+//}
 
 @end

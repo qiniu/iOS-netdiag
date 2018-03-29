@@ -248,6 +248,7 @@
 				TargetAttributes = {
 					DF8DFFCE1C61DA1B00174DA9 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = GDFHW66V92;
 					};
 					DFCEC6441C2EC01D0058EE65 = {
 						CreatedOnToolsVersion = 7.2;
@@ -289,13 +290,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NetDiagTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		3317CC6757C386790A56DF6E /* Copy Pods Resources */ = {
@@ -422,6 +426,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A71873FE0ACF7FD871CA4EC5 /* Pods-NetDiagTests.debug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = GDFHW66V92;
 				INFOPLIST_FILE = NetDiagTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -437,6 +442,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 02A06F48990E40305AB91EEC /* Pods-NetDiagTests.release.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = GDFHW66V92;
 				INFOPLIST_FILE = NetDiagTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
