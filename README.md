@@ -53,7 +53,7 @@ $ xctool -workspace NetDiag.xcworkspace -scheme NetDiagTests build test -sdk iph
 
 ## Contributing
 
-Please Look at[Contributing Guide](https://github.com/qiniu/iOS-netdiag/blob/master/CONTRIBUTING.md)。
+Please Look at [Contributing Guide](https://github.com/qiniu/iOS-netdiag/blob/master/CONTRIBUTING.md)。
 
 ## Contributors
 
