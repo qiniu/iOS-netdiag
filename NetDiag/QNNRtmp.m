@@ -228,7 +228,7 @@ static int verify_s2(int sock, char* server_sig, char* client_sig) {
             [self.output write:@"Problem accessing the DNS"];
             if (_complete != nil) {
                 dispatch_async(dispatch_get_main_queue(), ^(void) {
-                    _complete([self buildResult:-1006 durations:nil count:0]);
+                    self->_complete([self buildResult:-1006 durations:nil count:0]);
                 });
             }
             return;
@@ -264,7 +264,7 @@ static int verify_s2(int sock, char* server_sig, char* client_sig) {
             code = kQNNRequestStoped;
         }
         dispatch_async(dispatch_get_main_queue(), ^(void) {
-            _complete([self buildResult:code durations:intervals count:index]);
+            self->_complete([self buildResult:code durations:intervals count:index]);
         });
     }
     free(intervals);

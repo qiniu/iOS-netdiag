@@ -112,7 +112,7 @@
             [self.output write:@"Problem accessing the DNS"];
             if (_complete != nil) {
                 dispatch_async(dispatch_get_main_queue(), ^(void) {
-                    _complete([self buildResult:-1006 ip:nil durations:nil loss:0 count:0 totalTime:0]);
+                    self->_complete([self buildResult:-1006 ip:nil durations:nil loss:0 count:0 totalTime:0]);
                 });
             }
             return;
@@ -149,7 +149,7 @@
         }
         __block NSDate *startDate = begin;
         dispatch_async(dispatch_get_main_queue(), ^(void) {
-            _complete([self buildResult:code ip:ip durations:intervals loss:loss count:index totalTime:[[NSDate date] timeIntervalSinceDate:startDate] * 1000]);
+            self->_complete([self buildResult:code ip:ip durations:intervals loss:loss count:index totalTime:[[NSDate date] timeIntervalSinceDate:startDate] * 1000]);
             free(intervals);
         });
     }
