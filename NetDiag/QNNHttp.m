@@ -110,7 +110,7 @@
         [_output write:[NSString stringWithFormat:@"complete duration:%f status %ld\n", duration, (long)response.statusCode]];
         if (response != nil && response.allHeaderFields != nil) {
             [response.allHeaderFields enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSString *obj, BOOL *stop) {
-                [_output write:[NSString stringWithFormat:@"%@: %@\n", key, obj]];
+              [self->_output write:[NSString stringWithFormat:@"%@: %@\n", key, obj]];
             }];
         }
     }
