@@ -41,7 +41,7 @@ typedef void (^QNNPingCompleteHandler)(QNNPingResult*);
                  size:(NSUInteger)size
                output:(id<QNNOutputDelegate>)output
              complete:(QNNPingCompleteHandler)complete
-             interval:(NSInteger)interval
+             interval:(NSTimeInterval)interval
                 count:(NSInteger)count;
 
 @end

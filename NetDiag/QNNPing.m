@@ -223,7 +223,7 @@ static BOOL isValidResponse(char *buffer, int len, int seq, int identifier) {
 @property (nonatomic, strong) id<QNNOutputDelegate> output;
 @property (readonly) QNNPingCompleteHandler complete;
 
-@property (readonly) NSInteger interval;
+@property (readonly) NSTimeInterval interval;
 @property (readonly) NSInteger count;
 @property (atomic) BOOL stopped;
 @end
@@ -367,7 +367,7 @@ static BOOL isValidResponse(char *buffer, int len, int seq, int identifier) {
         }
 
         if (index < _count && !_stopped && r == 0) {
-            [NSThread sleepForTimeInterval:0.1];
+            [NSThread sleepForTimeInterval:self.interval];
         }
         close(sock);
     } while (++index < _count && !_stopped && r == 0);
@@ -395,7 +395,7 @@ static BOOL isValidResponse(char *buffer, int len, int seq, int identifier) {
                 size:(NSUInteger)size
               output:(id<QNNOutputDelegate>)output
             complete:(QNNPingCompleteHandler)complete
-            interval:(NSInteger)interval
+            interval:(NSTimeInterval)interval
                count:(NSInteger)count {
     if (self = [super init]) {
         _host = host;
@@ -412,14 +412,14 @@ static BOOL isValidResponse(char *buffer, int len, int seq, int identifier) {
                  size:(NSUInteger)size
                output:(id<QNNOutputDelegate>)output
              complete:(QNNPingCompleteHandler)complete {
-    return [QNNPing start:host size:size output:output complete:complete interval:200 count:10];
+    return [QNNPing start:host size:size output:output complete:complete interval:0.2 count:10];
 }
 
 + (instancetype)start:(NSString *)host
                  size:(NSUInteger)size
                output:(id<QNNOutputDelegate>)output
              complete:(QNNPingCompleteHandler)complete
-             interval:(NSInteger)interval
+             interval:(NSTimeInterval)interval
                 count:(NSInteger)count {
     if (host == nil) {
         host = @"";
