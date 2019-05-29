@@ -184,7 +184,7 @@ static const int TraceMaxAttempts = 3;
             if (_complete != nil) {
                 [QNNQue async_run_main:^(void) {
                     QNNTraceRouteResult* result = [[QNNTraceRouteResult alloc] init:-1006 ip:nil content:nil];
-                    _complete(result);
+                    self->_complete(result);
                 }];
             }
             return;
@@ -199,7 +199,7 @@ static const int TraceMaxAttempts = 3;
         if (_complete != nil) {
             [QNNQue async_run_main:^(void) {
                 QNNTraceRouteResult* result = [[QNNTraceRouteResult alloc] init:-1 ip:[NSString stringWithUTF8String:inet_ntoa(addr.sin_addr)] content:nil];
-                _complete(result);
+                self->_complete(result);
             }];
         }
         close(recv_sock);
@@ -227,8 +227,8 @@ static const int TraceMaxAttempts = 3;
         code = kQNNRequestStoped;
     }
     [QNNQue async_run_main:^(void) {
-        QNNTraceRouteResult* result = [[QNNTraceRouteResult alloc] init:code ip:[NSString stringWithUTF8String:inet_ntoa(addr.sin_addr)] content:_contentString];
-        _complete(result);
+        QNNTraceRouteResult* result = [[QNNTraceRouteResult alloc] init:code ip:[NSString stringWithUTF8String:inet_ntoa(addr.sin_addr)] content:self->_contentString];
+        self->_complete(result);
     }];
 }
 

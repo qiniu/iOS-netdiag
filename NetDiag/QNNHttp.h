@@ -35,6 +35,7 @@ typedef void (^QNNHttpCompleteHandler)(QNNHttpResult*);
  *    @return QNNTcpping instance, could be stop
  */
 + (instancetype)start:(NSString*)url
+              headers:(NSDictionary *)headers
                output:(id<QNNOutputDelegate>)output
              complete:(QNNHttpCompleteHandler)complete;
 
