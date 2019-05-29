@@ -223,7 +223,7 @@ static BOOL isValidResponse(char *buffer, int len, int seq, int identifier) {
 @property (nonatomic, strong) id<QNNOutputDelegate> output;
 @property (readonly) QNNPingCompleteHandler complete;
 
-@property (readonly) NSInteger interval;
+@property (readonly) NSTimeInterval interval;
 @property (readonly) NSInteger count;
 @property (atomic) BOOL stopped;
 @end
@@ -331,8 +331,8 @@ static BOOL isValidResponse(char *buffer, int len, int seq, int identifier) {
             [self.output write:@"Problem accessing the DNS"];
             if (_complete != nil) {
                 [QNNQue async_run_main:^(void) {
-                    QNNPingResult *result = [[QNNPingResult alloc] init:-1006 ip:nil size:_size max:0 min:0 avg:0 loss:0 count:0 totalTime:0 stddev:0];
-                    _complete(result);
+                  QNNPingResult *result = [[QNNPingResult alloc] init:-1006 ip:nil size:self->_size max:0 min:0 avg:0 loss:0 count:0 totalTime:0 stddev:0];
+                  self->_complete(result);
                 }];
             }
             return;
@@ -367,10 +367,10 @@ static BOOL isValidResponse(char *buffer, int len, int seq, int identifier) {
         }
 
         if (index < _count && !_stopped && r == 0) {
-            [NSThread sleepForTimeInterval:0.1];
+            [NSThread sleepForTimeInterval:self.interval];
         }
         close(sock);
-    } while (++index < _count && !_stopped && r == 0);
+    } while (++index < _count && !_stopped);
 
     if (_complete) {
         NSInteger code = r;
@@ -385,7 +385,7 @@ static BOOL isValidResponse(char *buffer, int len, int seq, int identifier) {
                                         totalTime:[[NSDate date] timeIntervalSinceDate:begin] * 1000];
         [self.output write:result.description];
         [QNNQue async_run_main:^(void) {
-            _complete(result);
+          self->_complete(result);
         }];
     }
     free(durations);
@@ -394,9 +394,9 @@ static BOOL isValidResponse(char *buffer, int len, int seq, int identifier) {
 - (instancetype)init:(NSString *)host
                 size:(NSUInteger)size
               output:(id<QNNOutputDelegate>)output
-            complete:(QNNPingCompleteHandler)complete
-            interval:(NSInteger)interval
-               count:(NSInteger)count {
+            interval:(NSTimeInterval)interval
+               count:(NSInteger)count
+            complete:(QNNPingCompleteHandler)complete {
     if (self = [super init]) {
         _host = host;
         _size = size;
@@ -412,19 +412,19 @@ static BOOL isValidResponse(char *buffer, int len, int seq, int identifier) {
                  size:(NSUInteger)size
                output:(id<QNNOutputDelegate>)output
              complete:(QNNPingCompleteHandler)complete {
-    return [QNNPing start:host size:size output:output complete:complete interval:200 count:10];
+    return [QNNPing start:host size:size output:output interval:0.2 count:10 complete:complete];
 }
 
 + (instancetype)start:(NSString *)host
                  size:(NSUInteger)size
                output:(id<QNNOutputDelegate>)output
-             complete:(QNNPingCompleteHandler)complete
-             interval:(NSInteger)interval
-                count:(NSInteger)count {
+             interval:(NSTimeInterval)interval
+                count:(NSInteger)count
+             complete:(QNNPingCompleteHandler)complete {
     if (host == nil) {
         host = @"";
     }
-    QNNPing *ping = [[QNNPing alloc] init:host size:size output:output complete:complete interval:interval count:count];
+    QNNPing *ping = [[QNNPing alloc] init:host size:size output:output interval:interval count:count complete:complete];
     [QNNQue async_run_serial:^{
         [ping run];
     }];
