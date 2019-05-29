@@ -370,7 +370,7 @@ static BOOL isValidResponse(char *buffer, int len, int seq, int identifier) {
             [NSThread sleepForTimeInterval:self.interval];
         }
         close(sock);
-    } while (++index < _count && !_stopped && r == 0);
+    } while (++index < _count && !_stopped);
 
     if (_complete) {
         NSInteger code = r;
