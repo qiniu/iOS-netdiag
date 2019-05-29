@@ -40,8 +40,8 @@ typedef void (^QNNPingCompleteHandler)(QNNPingResult*);
 + (instancetype)start:(NSString*)host
                  size:(NSUInteger)size
                output:(id<QNNOutputDelegate>)output
-             complete:(QNNPingCompleteHandler)complete
              interval:(NSTimeInterval)interval
-                count:(NSInteger)count;
+                count:(NSInteger)count
+             complete:(QNNPingCompleteHandler)complete;
 
 @end

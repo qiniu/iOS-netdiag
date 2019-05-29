@@ -394,9 +394,9 @@ static BOOL isValidResponse(char *buffer, int len, int seq, int identifier) {
 - (instancetype)init:(NSString *)host
                 size:(NSUInteger)size
               output:(id<QNNOutputDelegate>)output
-            complete:(QNNPingCompleteHandler)complete
             interval:(NSTimeInterval)interval
-               count:(NSInteger)count {
+               count:(NSInteger)count
+            complete:(QNNPingCompleteHandler)complete {
     if (self = [super init]) {
         _host = host;
         _size = size;
@@ -412,19 +412,19 @@ static BOOL isValidResponse(char *buffer, int len, int seq, int identifier) {
                  size:(NSUInteger)size
                output:(id<QNNOutputDelegate>)output
              complete:(QNNPingCompleteHandler)complete {
-    return [QNNPing start:host size:size output:output complete:complete interval:0.2 count:10];
+    return [QNNPing start:host size:size output:output interval:0.2 count:10 complete:complete];
 }
 
 + (instancetype)start:(NSString *)host
                  size:(NSUInteger)size
                output:(id<QNNOutputDelegate>)output
-             complete:(QNNPingCompleteHandler)complete
              interval:(NSTimeInterval)interval
-                count:(NSInteger)count {
+                count:(NSInteger)count
+             complete:(QNNPingCompleteHandler)complete {
     if (host == nil) {
         host = @"";
     }
-    QNNPing *ping = [[QNNPing alloc] init:host size:size output:output complete:complete interval:interval count:count];
+    QNNPing *ping = [[QNNPing alloc] init:host size:size output:output interval:interval count:count complete:complete];
     [QNNQue async_run_serial:^{
         [ping run];
     }];
