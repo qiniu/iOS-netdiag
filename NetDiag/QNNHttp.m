@@ -43,6 +43,7 @@
 
 @interface QNNHttp ()
 @property (readonly) NSString *url;
+@property (readonly) NSDictionary *headers;
 @property (readonly) id<QNNOutputDelegate> output;
 @property (readonly) QNNHttpCompleteHandler complete;
 @end
@@ -50,12 +51,14 @@
 @implementation QNNHttp
 
 - (instancetype)init:(NSString *)url
+             headers:(NSDictionary *)headers
               output:(id<QNNOutputDelegate>)output
             complete:(QNNHttpCompleteHandler)complete {
     if (self = [super init]) {
         _url = url == nil ? @"" : url;
         _output = output;
         _complete = complete;
+        _headers = headers;
     }
     return self;
 }
@@ -96,6 +99,9 @@
     NSDate *t1 = [NSDate date];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:_url]];
     [urlRequest setHTTPMethod:@"GET"];
+    [_headers enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
+        [urlRequest setValue:value forHTTPHeaderField:key];
+    }];
 
     NSHTTPURLResponse *response = nil;
     NSError *httpError = nil;
@@ -128,12 +134,13 @@
 }
 
 + (instancetype)start:(NSString *)url
+              headers:(NSDictionary *) headers
                output:(id<QNNOutputDelegate>)output
              complete:(QNNHttpCompleteHandler)complete {
     if (url == nil) {
         url = @"";
     }
-    QNNHttp *http = [[QNNHttp alloc] init:url output:output complete:complete];
+    QNNHttp *http = [[QNNHttp alloc] init:url headers:headers output:output complete:complete];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
         [http run];
     });
